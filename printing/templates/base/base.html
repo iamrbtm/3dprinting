@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+  <link rel="icon" type="image/svg+xml" href="{{url_for('static', filename = 'images/favicon.svg')}}">
+  <link rel="icon" type="image/png" href="{{url_for('static', filename = 'images/favicon.png')}}">
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <style>
+    body {
+      background-color: #fbf4e7;
+    }
+
+    .navbar-sub-customclass {
+      background-color: #6A5325;
+    }
+
+    .navbar-customclass {
+      background-color: #253C6A;
+    }
+
+    /* changing brand text color*/
+    .navbar-customclass .navbar-brand,
+    .navbar-customclass .navbar-text,
+    .navbar-sub-customclass .navbar-brand,
+    .navbar-sub-customclass .navbar-text {
+      color: #ffffff;
+    }
+
+    /* navigation link text color */
+    .navbar-customclass .navbar-nav .nav-link,
+    .navbar-sub-customclass .navbar-nav .nav-link {
+      color: rgba(255, 255, 255, .6);
+    }
+
+    /* navigation links anchor hover and active styles */
+    .navbar-customclass .nav-item.active .nav-link,
+    .navbar-customclass .nav-item:hover .nav-link,
+    .navbar-sub-customclass .nav-item.active .nav-link,
+    .navbar-sub-customclass .nav-item:hover .nav-link {
+      color: #fbf4e7;
+    }
+
+    #dropdownUser1 {
+      color: rgba(255, 255, 255, .6);
+    }
+
+    .nav-pills .nav-link {
+      color: #253C6A;
+    }
+
+    .nav-pills .nav-link.active,
+    .nav-pills .show>.nav-link {
+      background-color: #6a312500
+    }
+  </style>
+  {% block style %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar navbar-customclass navbar-fixed-top navbar-expand-md">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">3D Printing</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+        aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle text-light" id="dropdownUser1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {% if current_user.avatar_url %}
+            {% set fn = current_user.avatar_url %}
+            <img src="{{fn}}" alt="" width="40px" height="40px" class="rounded-circle">
+            {% else %}
+            {% set fn = 'images/'+current_user.avatar_filename %}
+            <img src="{{url_for('static', filename = fn)}}" alt="" width="40px" height="40px" class="rounded-circle">
+            {% endif %}
+            {{current_user.firstname}} {{current_user.lastname}}
+          </a>
+          <ul class="dropdown-menu text-small text-light" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="{{url_for('base.profile')}}">Profile</a></li>
+            <li><a class="dropdown-item" href="{{url_for('base.stateimport')}}">Import States</a></li>
+            <li><a class="dropdown-item" href="{{url_for('base.typeimport')}}">Import Types of Filament</a></li>
+            typeimport
+            <li>
+              <hr class="dropdown-divider">
+            <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Sign out</a></li>
+          </ul>
+        </div>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{url_for('auth.sign_up')}}">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{url_for('auth.login')}}">Log In</a>
+        </li>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- SubMenu -->
+  {% block submenu %}
+  {% endblock %}
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  {% if category == 'error' %}
+  <div class="alert alert-danger alter-dismissable fade show" role="alert"
+    style="position:fixed; top: 0px; left: 0px; width: 100%; z-index:9999; border: 5px groove #000000; border-radius: 40px 10px 40px 10px; font-size:20px; font-weight:bold">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% else %}
+  <div class="alert alert-success alter-dismissable fade show" role="alert"
+    style="position:fixed; top: 0px; left: 0px; width: 100%; z-index:9999; border: 5px groove #000000; border-radius: 40px 10px 40px 10px; font-size:20px; font-weight:bold">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <!-- page-content  -->
+  <main class="page-content">
+    <div class="container-fluid">
+      <div class="form-group" style="padding-top: 10px;">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+  </script>
+  <script src="https://kit.fontawesome.com/999ca2bb93.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

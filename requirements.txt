@@ -1,0 +1,14 @@
+Flask
+Flask-Login
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Uploads
+Flask-Mail
+Flask-WTF
+requests
+validators
+flask_debugtoolbar
+python-dotenv
+mysqlclient
+WTForms-SQLAlchemy
+email_validator
