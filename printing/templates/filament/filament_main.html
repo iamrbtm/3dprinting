@@ -1,5 +1,5 @@
-{% extends "base/base.html" %}
-{% from "_utilities.html" import render_field, render_select %}
+{% extends "filament/filament_submenu.html" %}
+
 <!-- Title of the page (what goes on the tab when rendered) -->
 {% block title %}
 {% endblock %}
@@ -9,12 +9,21 @@
 {% endblock %}
 
 <!-- Any Submenus go here -->
-{% block submenu %}
-{% endblock %}
+{% block extra_menu_items %}
+{% endblock extra_menu_items %}
 
 <!-- Main Content -->
 {% block content %}
 <h4 class="display-4 text-center">Filaments</h4>
+{% for fil in fils %}
+    {{fil.color}}
+    {% for type in types %}
+    {% if fil.typefk == type.id %}
+        {{type.type}}
+    {% endif %}
+    {% endfor %}
+    <br />
+{% endfor %}
 {% endblock %}
 
 <!-- Scripts needed for this page -->

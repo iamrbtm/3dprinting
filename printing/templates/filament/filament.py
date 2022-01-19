@@ -25,7 +25,8 @@ bp_filament = Blueprint("filament", __name__)
 @login_required
 def filament_main():
     fils = Filament.query.all()
-    context = {'user': User, 'fils': fils}
+    types = Type.query.all()
+    context = {'user': User, 'fils': fils, 'types':types}
     return render_template("/filament/filament_main.html", **context)
 
 
