@@ -15,6 +15,7 @@
 {% block content %}
 <h4 class="display-4 text-center">Profile for {{usr.firstname}} {{usr.lastname}}</h4>
 <form method=POST enctype=multipart/form-data action="{{url_for('base.profile')}}">
+    {{ form.csrf_token }}
     <fieldset class="form-field row">
         <div class="col-md-6">
             {{ form.email.label(class="form-label" )}}

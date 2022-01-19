@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+{% from "_utilities.html" import render_field, render_select %}
+<!-- Title of the page (what goes on the tab when rendered) -->
+{% block title %}
+{% endblock %}
+
+<!-- Specific Style to this page -->
+{% block style %}
+{% endblock %}
+
+<!-- Any Submenus go here -->
+{% block submenu %}
+{% endblock %}
+
+<!-- Main Content -->
+{% block content %}
+<h4 class="display-4 text-center">Add a Filament</h4>
+<form method=POST enctype=multipart/form-data action="{{url_for('filament.filament')}}">
+    {{ form.csrf_token }}
+    <fieldset class="form-field row">
+        <div class="col-md-3">
+            {{ render_field(form.name) }}
+        </div>
+        <div class="col-md-3">
+            {{ render_field(form.color) }}
+        </div>
+        <div class="row"></div>
+        <div class="col-md-3">
+            {{ render_select(form.typefk) }}
+        </div>
+        <div class="col-md-3">
+            {{ render_field(form.length_spool) }}
+        </div>
+        <div class="row"></div>
+        <div class="col-md-3">
+            {{ render_select(form.vendorfk) }}
+        </div>
+        <div class="col-md-3">
+            {{ render_field(form.priceperroll) }}
+        </div>
+        <div class="row"></div>
+        <div class="col-md-2">
+            {{ render_field(form.purchasedate) }}
+        </div>
+        <div class="col-md-4">
+            {{ render_field(form.url) }}
+        </div>
+        <div class="row"></div>
+        <div class="col-md-4">
+            <input class="btn btn-primary" type="submit" value="Add Filament">
+        </div>
+    </fieldset>
+</form>
+{% endblock %}
+
+<!-- Scripts needed for this page -->
+{% block scripts %}
+{% endblock %}
