@@ -25,6 +25,13 @@
     .btn-primary:hover,
     .btn-primary:active,
     .btn-primary:visited {
+      background-color: #253C6A !important;
+    }
+
+    .btn-secondary,
+    .btn-secondary:hover,
+    .btn-secondary:active,
+    .btn-secondary:visited {
       background-color: #6A5325 !important;
     }
 
@@ -90,7 +97,7 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{{ url_for('filament.filament_main') }}">Filaments</a>
           </li>
         </ul>
         <div class="dropdown text-end">
