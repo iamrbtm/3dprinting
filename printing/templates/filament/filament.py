@@ -24,9 +24,17 @@ bp_filament = Blueprint("filament", __name__)
 @bp_filament.route("/", methods=["GET", "POST"])
 @login_required
 def filament_main():
+    form = Filament_form()
+    if form.validate_on_submit():
+        fil = Filament()
+        form.populate_obj(fil)
+        db.session.add(fil)
+        db.session.commit()
+        return redirect(url_for("bp_filament.filament_main"))
+    
     fils = Filament.query.all()
     types = Type.query.all()
-    context = {'user': User, 'fils': fils, 'types':types}
+    context = {'user': User, 'fils': fils, 'types':types, 'form':form}
     return render_template("/filament/filament_main.html", **context)
 
 

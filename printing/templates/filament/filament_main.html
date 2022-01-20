@@ -1,4 +1,6 @@
 {% extends "filament/filament_submenu.html" %}
+{% from "_utilities.html" import render_field, render_select %}
+
 
 <!-- Title of the page (what goes on the tab when rendered) -->
 {% block title %}
@@ -8,9 +10,15 @@
 {% block style %}
 {% endblock %}
 
-<!-- Any Submenus go here -->
+<!-- Any Page Menu Item go here -->
 {% block extra_menu_items %}
+<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_fil_Modal">Add New Filament</a>
+
 {% endblock extra_menu_items %}
+
+<!-- Any Action items go here -->
+{% block action_items %}
+{% endblock action_items %}
 
 <!-- Main Content -->
 {% block content %}
@@ -24,8 +32,75 @@
     {% endfor %}
     <br />
 {% endfor %}
+
+<!-- Modal for Adding New Filament -->
+<!-- Button trigger modal -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="new_fil_Modal" tabindex="-1" aria-labelledby="new_fil_ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="new_fil_ModalLabel">Add New Filament</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method=POST enctype=multipart/form-data action="{{url_for('filament.filament_main')}}">
+                {{ form.csrf_token }}
+                <fieldset class="form-field row">
+                    <div class="col-md-6">
+                        {{ render_field(form.name) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ render_field(form.color) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-6">
+                        {{ render_select(form.typefk) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ render_field(form.length_spool) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-6">
+                        {{ render_select(form.vendorfk) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ render_field(form.priceperroll) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-6">
+                        {{ render_field(form.purchasedate) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ render_field(form.url) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-4">
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input class="btn btn-primary" type="submit" value="Add Filament">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 <!-- Scripts needed for this page -->
 {% block scripts %}
+
+<script>
+    
+    var formErrors = {% if form.errors %}true{% else %}false{% endif %};
+
+    $(document).ready(function() {
+        if (formErrors) {
+            $('.modal').modal('show');
+        }
+    });
+</script>
 {% endblock %}
