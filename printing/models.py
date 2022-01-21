@@ -25,6 +25,11 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
 
+class apitoken(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    token = db.Column(db.String(200))
+
 class States(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     state = db.Column(db.String(50))
@@ -70,6 +75,7 @@ class Filament(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     color = db.Column(db.String(100))
+    colorhex = db.Column(db.String(20))
     priceperroll = db.Column(db.Float)
     length_spool = db.Column(db.Float)
     url = db.Column(db.String(200))

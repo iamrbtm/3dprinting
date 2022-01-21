@@ -6,6 +6,7 @@ Flask-Migrate
 Flask-Uploads
 Flask-Mail
 Flask-WTF
+matplotlib
 requests
 validators
 flask_debugtoolbar

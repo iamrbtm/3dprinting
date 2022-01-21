@@ -1,6 +1,8 @@
 import re
 from printing import db
 from printing.models import *
+from matplotlib import colors
+from flask import flash
 
 
 def format_tel(phone):
@@ -262,6 +264,52 @@ def populate_types():
                 )
                 db.session.add(new)
                 db.session.commit()
+
+def convert_color_to_hex(color:str):
+    valid, newcolor = valid_color(color)
+    if valid:
+        return colors.to_hex(newcolor)
+    else:
+        flash('No color found', category='error')
+        return '000000'
+
+def valid_color(color:str):
+    valid_colors = ["MediumVioletRed","DeepPink","PaleVioletRed","HotPink","LightPink","Pink","DarkRed","Red","Firebrick","Crimson","IndianRed","LightCoral","Salmon","DarkSalmon","LightSalmon","OrangeRed","Tomato","DarkOrange","Coral","Orange","DarkKhaki","Gold","Khaki","PeachPuff","Yellow","PaleGoldenrod","Moccasin","PapayaWhip","LightGoldenrodYellow","LemonChiffon","LightYellow","Maroon","Brown","SaddleBrown","Sienna","Chocolate","DarkGoldenrod","Peru","RosyBrown","Goldenrod","SandyBrown","Tan","Burlywood","Wheat","NavajoWhite","Bisque","BlanchedAlmond","Cornsilk","DarkGreen","Green","DarkOliveGreen","ForestGreen","SeaGreen","Olive","OliveDrab","MediumSeaGreen","LimeGreen","Lime","SpringGreen","MediumSpringGreen","DarkSeaGreen","MediumAquamarine","YellowGreen","LawnGreen","Chartreuse","LightGreen","GreenYellow","PaleGreen","Teal","DarkCyan","LightSeaGreen","CadetBlue","DarkTurquoise","MediumTurquoise","Turquoise","Aqua","Cyan","Aquamarine","PaleTurquoise","LightCyan","Navy","DarkBlue","MediumBlue","Blue","MidnightBlue","RoyalBlue","SteelBlue","DodgerBlue","DeepSkyBlue","CornflowerBlue","SkyBlue","LightSkyBlue","LightSteelBlue","LightBlue","PowderBlue","Indigo","Purple","DarkMagenta","DarkViolet","DarkSlateBlue","BlueViolet","DarkOrchid","Fuchsia","Magenta","SlateBlue","MediumSlateBlue","MediumOrchid","MediumPurple","Orchid","Violet","Plum","Thistle","Lavender","White","MistyRose","AntiqueWhite","Linen","Beige","WhiteSmoke","LavenderBlush","OldLace","AliceBlue","Seashell","GhostWhite","Honeydew","FloralWhite","Azure","MintCream","Snow","Ivory","White","Black","DarkSlateGray","DimGray","SlateGray","Gray","LightSlateGray","DarkGray","Silver","LightGray","Gainsboro"]
+    origcolor = color.replace(' ','')
+    colorsplit = color.split(' ')
+    
+    if origcolor in valid_colors:
+        return [True,origcolor]
+    elif len(colorsplit) != 1:
+        for color in colorsplit:
+            if color in valid_colors:
+                return [True,color]
+        else:
+            return [False,'000000']
+    else:
+        return [False,'000000']
+
+def shorten_url(longurl):
+    import requests
+    import json
+
+    url = "https://api-ssl.bitly.com/v4/shorten"
+    dbtoken = db.session.query(apitoken).filter(apitoken.name == 'bitley').first().token
+
+    payload = json.dumps({
+    "domain": "bit.ly",
+    "long_url": f"{longurl}"
+    })
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {dbtoken}'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    fulljson = json.loads(response.text)
+    link = fulljson['link']
+    return link
 
 
 # if __name__ == "__main__":

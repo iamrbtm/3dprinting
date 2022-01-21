@@ -43,10 +43,10 @@ class Filament_form(FlaskForm):
     length_spool = FloatField(
         "Spool Length", [NumberRange(min=0.01, max=9999, message="Enter numbers only")]
     )
-    url = StringField("Purchase Website", [URL()])
+    url = StringField("Purchase Website", [])
     purchasedate = DateField("Purchase Date")
     vendorfk = SelectField("Vendor")
-    typefk = SelectField("Type", [InputRequired()])
+    typefk = SelectField("Type", [])
     submit = SubmitField("Submit")
 
     def __init__(self):

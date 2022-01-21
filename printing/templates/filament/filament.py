@@ -28,6 +28,9 @@ def filament_main():
         fil = Filament()
         form.populate_obj(fil)
         fil.userid = current_user.id
+        fil.colorhex = convert_color_to_hex(form.color.data)
+        if form.url.data != '':
+            fil.url = shorten_url(form.url.data)
         db.session.add(fil)
         db.session.commit()
         return redirect(url_for("filament.filament_main"))
