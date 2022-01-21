@@ -47,6 +47,7 @@ class Filament_form(FlaskForm):
     purchasedate = DateField("Purchase Date")
     vendorfk = SelectField("Vendor")
     typefk = SelectField("Type", [InputRequired()])
+    submit = SubmitField("Submit")
 
     def __init__(self):
         super(Filament_form, self).__init__()

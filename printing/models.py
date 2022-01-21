@@ -63,7 +63,7 @@ class Type(db.Model):
     )
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     # Relationships
-    filament = db.relationship("Filament", backref="type", lazy=True)
+    filament_rel = db.relationship("Filament", backref="type", lazy=True)
 
 
 class Filament(db.Model):
@@ -81,6 +81,7 @@ class Filament(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     vendorfk = db.Column(db.Integer, db.ForeignKey("vendors.id"))
     typefk = db.Column(db.Integer, db.ForeignKey("type.id"))
+    type_rel = db.relationship("Type", backref="filament", lazy=True)
 
 
 # class <name>(db.Model):
