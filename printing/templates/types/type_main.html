@@ -28,14 +28,13 @@
             <thead class="table-primary">
                 <tr>
                     <th>Type</th>
-                    <th>Length</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in types %}
                 <tr>
-                    <td class="col">{{item.type}}</td>
-                    <td class="col"></td>
+                    <td class="col"><a href="{{ url_for('type.type_edit', id=item.id) }}" class="text-reset text-decoration-none">{{item.type}}</a></td>
                 </tr>
                 {% endfor%}
             </tbody>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-import email_validator
+import email_validator, flask_login
 from wtforms import (
     StringField,
     DateField,
@@ -9,6 +9,7 @@ from wtforms import (
     SelectMultipleField,
     SubmitField,
     FloatField,
+    HiddenField
 )
 from wtforms.validators import InputRequired, Email, URL, NumberRange
 from wtforms_sqlalchemy.fields import QuerySelectField
@@ -119,12 +120,12 @@ class Type_form(FlaskForm):
     diameter = SelectMultipleField(
         u"Diameter", [], coerce=int, choices=[(1, "1.75mm"), (2, "3mm")], default=[1,2]
     )
-    extruder_temp_from = SelectField("End Temp Start Range", choices=ext_temps)
-    extruder_temp_to = SelectField("End Temp End Range", choices=ext_temps)
-    bed_temp_from = SelectField("Bed Temp From Range", choices=bed_temps)
-    bed_temp_to = SelectField("Bed Temp To Range", choices=bed_temps)
-    bed_adhesion = StringField("Bed Adhesion")
-    densitygcm3 = DecimalField("Density")
-    m_in_1kg_3 = DecimalField("Meters in 1 KG (3mm diameter)")
-    m_in_1kg_175 = DecimalField("Meters in 1 KG (3mm diameter)")
-    submit = SubmitField("Submit")
+    extruder_temp_from = SelectField(u"End Temp Start Range", choices=ext_temps)
+    extruder_temp_to = SelectField(u"End Temp End Range", choices=ext_temps)
+    bed_temp_from = SelectField(u"Bed Temp From Range", choices=bed_temps)
+    bed_temp_to = SelectField(u"Bed Temp To Range", choices=bed_temps)
+    bed_adhesion = StringField(u"Bed Adhesion")
+    densitygcm3 = DecimalField(u"Density")
+    m_in_1kg_3 = DecimalField(u"Meters in 1 KG (3mm diameter)")
+    m_in_1kg_175 = DecimalField(u"Meters in 1 KG (3mm diameter)")
+    submit = SubmitField(u"Submit")
