@@ -30,6 +30,7 @@ class apitoken(db.Model):
     name = db.Column(db.String(50))
     token = db.Column(db.String(200))
 
+
 class States(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     state = db.Column(db.String(50))
@@ -58,10 +59,15 @@ class Type(db.Model):
     type = db.Column(db.String(100))
     properties = db.Column(db.JSON)
     useage = db.Column(db.JSON)
+    diameter = db.Column(db.JSON)
+    # filament info
     extruder_temp = db.Column(db.JSON)
     bed_temp = db.Column(db.JSON)
     bed_adhesion = db.Column(db.JSON)
-    diameter = db.Column(db.JSON)
+    densitygcm3 = db.Column(db.Float)
+    m_in_1kg_3 = db.Column(db.Float)
+    m_in_1kg_175 = db.Column(db.Float)
+
     userid = db.Column(db.Integer)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
@@ -77,7 +83,7 @@ class Filament(db.Model):
     color = db.Column(db.String(100))
     colorhex = db.Column(db.String(20))
     priceperroll = db.Column(db.Float)
-    length_spool = db.Column(db.Float)
+    length_spool = db.Column(db.String())
     url = db.Column(db.String(200))
     purchasedate = db.Column(db.Date)
     userid = db.Column(db.Integer)
