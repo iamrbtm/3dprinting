@@ -7,6 +7,7 @@ from flask import (
     after_this_request,
     flash,
 )
+from sqlalchemy.sql.expression import func
 from flask_login import login_required, current_user
 import flask_login
 from sqlalchemy.orm import session
@@ -57,3 +58,10 @@ def filament_edit(id):
     types = Type.query.all()
     context = {'user': User, 'types':types, 'form':form, 'filament':db_fil}
     return render_template("/filament/filament_edit.html", **context)
+
+@bp_filament.route("/delete/<int:id>", methods=["GET", "POST"])
+@login_required
+def filament_delete(id):
+    db.session.query(Filament).filter(Filament.id == id).delete()
+    db.session.commit()
+    return redirect(url_for('filament.filament_main'))

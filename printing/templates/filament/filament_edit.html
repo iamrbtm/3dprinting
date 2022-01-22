@@ -7,36 +7,39 @@
 <form method=POST enctype=multipart/form-data action="{{url_for('filament.filament_edit', id=filament.id)}}">
     {{ form.csrf_token }}
     <fieldset class="form-field row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             {{ render_field(form.name) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             {{ render_field(form.color) }}
         </div>
-        <div class="row"></div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             {{ render_select(form.typefk) }}
         </div>
-        <div class="col-md-6">
-            {{ render_field(form.length_spool) }}
+        <div class="col-md-3">
+            {{ render_select(form.diameter) }}
         </div>
-        <div class="row"></div>
-        <div class="col-md-6">
+        <div class="col-md-3">
+            {{ render_select(form.length_spool) }}
+        </div>
+        <div class="col-md">
             {{ render_select(form.vendorfk) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md">
             {{ render_field(form.priceperroll) }}
         </div>
-        <div class="row"></div>
-        <div class="col-md-6">
+        <div class="col-md">
             {{ render_field(form.purchasedate) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md">
             {{ render_field(form.url) }}
         </div>
         <div class="row"></div>
-        <div class="col-md-2">
+        <div class="col-md-1">
             {{ render_submit(form.submit) }}
+        </div>
+        <div class="col-md-11">
+        <a href="{{ url_for('filament.filament_delete', id=filament.id) }}" class="btn btn-danger">Delete {{form.name.data}} Filament</a>
         </div>
     </fieldset>
 </form>

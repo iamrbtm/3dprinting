@@ -23,9 +23,17 @@ bp_type = Blueprint("type", __name__)
 @bp_type.route("/", methods=["GET", "POST"])
 @login_required
 def type_main():
-
+    form = Type_form()
+    if form.validate_on_submit():
+        newtype = Type()
+        form.populate_obj(newtype)
+        newtype.userid = current_user.id
+        db.session.add(fil)
+        db.session.commit()
+        return redirect(url_for("type.type_main"))
+    
     types = Type.query.all()
-    context = {"user": User, "types": types}
+    context = {"user": User, "types": types, 'form':form}
     return render_template("/types/type_main.html", **context)
 
 
