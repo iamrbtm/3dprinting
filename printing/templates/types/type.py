@@ -22,35 +22,26 @@ bp_type = Blueprint("type", __name__)
 
 @bp_type.route("/", methods=["GET", "POST"])
 @login_required
-def filament_main():
-    form = Type_form()
-    
+def type_main():
+
     types = Type.query.all()
-    context = {'user': User, 'fils': fils, 'types':types, 'form':form}
-    return render_template("/filament/filament_main.html", **context)
+    context = {"user": User, "types": types}
+    return render_template("/types/type_main.html", **context)
 
-# @bp_filament.route("/edit/<int:id>", methods=["GET", "POST"])
-# @login_required
-# def filament_edit(id):
-#     form = Filament_form()
-#     db_fil = db.session.query(Filament).filter_by(id = id).first()
-#     if form.validate_on_submit():
-#         fil = Filament()
-#         form.populate_obj(fil)
-#         fil.userid = current_user.id
-#         db.session.add(fil)
-#         db.session.commit()
-#         return redirect(url_for("filament.filament_main"))
+
+@bp_type.route("/edit/<int:id>", methods=["GET", "POST"])
+@login_required
+def type_edit(id):
+    db_type = db.session.query(Type).filter_by(id=id).first()
+    form = Type_form(obj=db_type)
+    if form.validate_on_submit():
+        form.populate_obj(db_type)
+        db_type.userid = current_user.id
+        db.session.add(db_type)
+        db.session.commit()
+        return redirect(url_for("type.type_main"))
     
-#     form.name.data = db_fil.name
-#     form.color.data = db_fil.color
-#     form.priceperroll.data = db_fil.priceperroll
-#     form.length_spool.data = db_fil.length_spool
-#     form.url.data = db_fil.url
-#     form.purchasedate.data = db_fil.purchasedate
-#     form.vendorfk.data = db_fil.vendorfk #TODO figure out how to get the selected / stored value to populate in the select.
-#     form.typefk.data = form.typefk.choices[db_fil.typefk-1] #TODO figure out how to get the selected / stored value to populate in the select.
+    form.process(obj=db_type)
 
-#     types = Type.query.all()
-#     context = {'user': User, 'types':types, 'form':form}
-#     return render_template("/filament/filament_edit.html", **context)
+    context = {"user": User, "type": db_type, "form": form}
+    return render_template("/types/type_edit.html", **context)

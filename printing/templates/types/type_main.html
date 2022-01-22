@@ -1,4 +1,4 @@
-{% extends "filament/filament_submenu.html" %}
+{% extends "types/type_submenu.html" %}
 {% from "_utilities.html" import render_field, render_select %}
 
 
@@ -24,52 +24,29 @@
 <br>
 <div class="d-flex align-items-start">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        {% for type in types %}
-        {% if type.filament_rel|length >= 1 %}
-        <button class="nav-link {% if loop.index == 1 %}active{% endif %}" id="v-pills-{{type.type}}-tab" data-bs-toggle="pill" data-bs-target="#v-pills-{{type.type}}"
-            type="button" role="tab" aria-controls="v-pills-{{type.type}}" aria-selected="{% if loop.index == 1 %}true{% else %}false{% endif %}">{{type.type}}</button>
-        {% endif%}
-        {% endfor%}
-    </div>
-    <div class="tab-content" id="v-pills-tabContent">
-        {% for type in types %}
-        {% if type.filament_rel|length >= 1 %}
-        <div class="tab-pane fade {% if loop.index == 1 %}show active{% endif %}" id="v-pills-{{type.type}}" role="tabpanel" aria-labelledby="v-pills-{{type.type}}-tab">
-        <h2>{{type.type}}</h2>
         <table class="table table-bordered tow">
             <thead class="table-primary">
                 <tr>
-                    <th>Name</th>
+                    <th>Type</th>
                     <th>Length</th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in fils %}
-                {% if item.typefk == type.id %}
+                {% for item in types %}
                 <tr>
-                    <td class="col">{{item.name}}</td>
-                    <td class="col">{{item.length_spool}}</td>
-                    <td class="col"><a href="{{item.url}}" target="_blank" rel="noopener noreferrer">{{item.url}}</a></td>
-                    <td class="col">{{"$%.2f"|format(item.priceperroll)}}</td>
-                    <td class="col">{{item.purchasedate.strftime('%b %d, %Y')}}</td>
-                    {% if item.colorhex != "" %}
-                    <td style="background-color: {{item.colorhex}};" class="col-1"></td>
-                    {% endif %}
+                    <td class="col">{{item.type}}</td>
+                    <td class="col"></td>
                 </tr>
-                {% endif %}
-                {% endfor %}
+                {% endfor%}
             </tbody>
         </table>
-        </div>
-        {% endif %}
-        {% endfor%}
     </div>
 </div>
+{% endblock %}
 
 
 
-
-<!-- Modal -->
+{# <!-- Modal -->
 <div class="modal fade" id="new_fil_Modal" tabindex="-1" aria-labelledby="new_fil_ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -136,7 +113,8 @@
         else %
     }
     false {
-        % endif %
+        %
+        endif %
     };
 
     $(document).ready(function () {
@@ -145,4 +123,4 @@
         }
     });
 </script>
-{% endblock %}
+{% endblock %} #}

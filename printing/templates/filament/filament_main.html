@@ -47,7 +47,7 @@
                 {% for item in fils %}
                 {% if item.typefk == type.id %}
                 <tr>
-                    <td class="col">{{item.name}}</td>
+                    <td class="col">{{item.id}}{{item.name}}{{item.typefk}}</td>
                     <td class="col">{{item.length_spool}}</td>
                     <td class="col"><a href="{{item.url}}" target="_blank" rel="noopener noreferrer">{{item.url}}</a></td>
                     <td class="col">{{"$%.2f"|format(item.priceperroll)}}</td>
