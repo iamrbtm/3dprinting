@@ -25,6 +25,7 @@ def create_app():
         app.config["UPLOADED_UPLOADS_DEST"] = "printing/static/uploads"
         configure_uploads(app, photos)
         configure_uploads(app, uploads)
+    
     app._static_folder = "static"
 
     # Secrete Key
