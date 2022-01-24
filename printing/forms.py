@@ -52,6 +52,7 @@ class Filament_form(FlaskForm):
     purchasedate = DateField("Purchase Date")
     vendorfk = SelectField("Vendor", [], choices=vendor)
     typefk = SelectField("Type", [], choices=types)
+    referer = HiddenField()
     submit = SubmitField("Submit")
 
 
@@ -131,3 +132,14 @@ class Type_form(FlaskForm):
     m_in_1kg_175 = DecimalField(u"Meters in 1 KG (1.75mm diameter)")
     m_in_1kg_3 = DecimalField(u"Meters in 1 KG (3mm diameter)")
     submit = SubmitField(u"Submit")
+
+
+class Vendor_form(FlaskForm):
+    states = lambda: [(c.abr, c.state) for c in States.query.all()]
+    name = StringField("Name",[InputRequired("Please enter the name of the compnay you used to purchase from.")])
+    url = StringField("URL",[])
+    address = StringField("Address",[])
+    city = StringField("City",[])
+    state = SelectField("State",[], choices=states)
+    zipcode = StringField("ZipCode",[])
+    submit = SubmitField("Submit")

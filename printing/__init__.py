@@ -25,7 +25,7 @@ def create_app():
         app.config["UPLOADED_UPLOADS_DEST"] = "printing/static/uploads"
         configure_uploads(app, photos)
         configure_uploads(app, uploads)
-    
+
     app._static_folder = "static"
 
     # Secrete Key
@@ -61,14 +61,16 @@ def create_app():
     from printing.auth import auth
     from printing.templates.filament.filament import bp_filament
     from printing.templates.types.type import bp_type
+    from printing.templates.vendors.vendor import bp_vendor
 
     app.register_blueprint(base, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
     app.register_blueprint(bp_filament, url_prefix="/filament")
     app.register_blueprint(bp_type, url_prefix="/type")
-
+    app.register_blueprint(bp_vendor, url_prefix="/vendor")
 
     from printing.models import User
+
     db.create_all(app=app)
     # User Manager
 

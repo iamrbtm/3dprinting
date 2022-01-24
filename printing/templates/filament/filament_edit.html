@@ -1,6 +1,10 @@
 {% extends "filament/filament_submenu.html" %}
 {% from "_utilities.html" import render_field, render_select, render_submit %}
 
+{% block action_items %}
+<!--class="dropdown-item"-->
+<a href="{{ url_for('filament.filament_delete', id=filament.id) }}" class="dropdown-item">Delete {{form.name.data}} Filament</a>
+{% endblock action_items %}
 <!-- Main Content -->
 {% block content %}
 <h4 class="display-4 text-center">Filaments</h4>
@@ -37,9 +41,7 @@
         <div class="row"></div>
         <div class="col-md-1">
             {{ render_submit(form.submit) }}
-        </div>
-        <div class="col-md-11">
-        <a href="{{ url_for('filament.filament_delete', id=filament.id) }}" class="btn btn-danger">Delete {{form.name.data}} Filament</a>
+            {{ form.referer }}
         </div>
     </fieldset>
 </form>

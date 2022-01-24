@@ -44,6 +44,7 @@ def filament_main():
 @bp_filament.route("/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 def filament_edit(id):
+    
     db_fil = db.session.query(Filament).filter_by(id = id).first()
     form = Filament_form(obj=db_fil)
     if form.validate_on_submit():
@@ -51,9 +52,10 @@ def filament_edit(id):
         db_fil.userid = current_user.id
         db.session.add(db_fil)
         db.session.commit()
-        return redirect(url_for("filament.filament_main"))
+        return redirect(form.referer.data)
     
     form.process(obj=db_fil)
+    form.referer.data = request.referrer
    
     types = Type.query.all()
     context = {'user': User, 'types':types, 'form':form, 'filament':db_fil}
