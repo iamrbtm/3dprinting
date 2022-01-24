@@ -11,17 +11,16 @@
 {% endblock %}
 
 <!-- Any Page Menu Item go here -->
-{% block extra_menu_items %}
-<a class="nav-link" data-bs-toggle="modal" data-bs-target="#new_fil_Modal">Add New Type</a>
+{% block extra_menu_items %}  <!--class="nav-link"-->
 {% endblock extra_menu_items %}
 
 <!-- Any Action items go here -->
-{% block action_items %}
+{% block action_items %}  <!--class="dropdown-item"-->
+<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_fil_Modal">Add New Type</a>
 {% endblock action_items %}
 
 <!-- Main Content -->
 {% block content %}
-<br>
 <div class="d-flex align-items-start">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <table class="table table-bordered table-hover row">
