@@ -85,173 +85,130 @@ def populate_states():
 
 
 def populate_types():
-    filtypes = [
-        [
-            "ABS",
-            "Making durable parts that need to withstand higher temperatures, Easy to print with, strong plastic",
-            "Legos, instruments, sports equipment, Objects that might be dropped, knife handles, car phone mounts, phone cases, toys, wedding rings",
-            "210 - 250",
-            "80-110 ",
-            "Kapton Tape / Hairspray",
-            "1.75mm/3mm",
-        ],
-        [
-            "PLA",
-            "Odorless, Low-warp, Eco-Friendly, Less energy to process",
-            "Food containers such as candy wrappers, biodegradable medical implants, models, prototype parts",
-            "190 - 230",
-            "60 - 80.",
-            "Blue painter's tape/ Hairspray",
-            "1.75mm/3mm",
-        ],
-        [
-            "PVA",
-            "Non harmful, non-toxic, and environment friendly, Easily be dissolved in water under normal temperature, Easily stripping.",
-            "paper adhesive, thickener, packaging film in feminine hygiene, adult incontinence products, children's play putty or slime, freshwater sports fishing",
-            "180 - 230",
-            "45 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "PET",
-            "FDA approved for food containers and tools used for food consumption, barely warps, no odors or fumes when printed",
-            "phone cases and mechanical parts that require flexibility and impact resistance, jewelry, props, and electronics",
-            "230-255 ",
-            "55 -70 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "PETG",
-            "Extremely durable and prints without odor. Has superior impact resistance that is superior to PET. Low shrinkage, no warping and not brittle.",
-            "Protective components like phone cases and mechanical parts that require flexibility. Food containers like cups and plates.",
-            "220 - 245",
-            "70 - 75",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "PETT",
-            "Colorless, Water Clear, FDA approved, Recyclable, Strong and Flexible",
-            "Food containers like cups and utensils, Soda pop bottles",
-            "210 - 230",
-            "45 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "HIPS",
-            "Biodegradable, Great 3D Support material, low-cost",
-            "costumes, models, miniature figurines, prototyping",
-            "220-230 ",
-            "50 -60 ",
-            "Kapton Tape/Hairspray",
-            "1.75mm/3mm",
-        ],
-        [
-            "Nylon",
-            "strong, lightweight, durable, flexible, wear-resistant, 100% thermoplastic",
-            "machine parts, mechanical components, structural parts, gears and bearings, dynamic load, containers, tools, consumer products and toys.",
-            "210 - 250",
-            "60 -80 ",
-            "PVA Based Glue",
-            "1.75mm/3mm",
-        ],
-        [
-            "Wood",
-            "Versatility, Real wood scent, Durability, contain real wood fibers",
-            "wooden box, wooden figurine, tables, chairs, cups or the likes.",
-            "200 - 260",
-            "90-110.",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Sandstone",
-            "No plastic feeling, Printed objects can be coloured and easely grinded, Stics well on print bed, No heated bed necessary, Near zero warp",
-            "Architecture models, landscapes",
-            "165 - 210",
-            "20 -55 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Metal",
-            "highly durable, not soluble, little shrinkage during cooling",
-            "Jewelry, statues, home hardware and artifact replicas.",
-            "195-220 ",
-            "50 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Magnetic Iron PLA",
-            "High Durability, Magnetic Look, Magnetic properties",
-            "Fridge magnets, sensors, actuators, magnetic stirrers, and educational, DIY projects.",
-            "185 ",
-            "20 -55 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Conductive PLA",
-            "Very low warping, Not Soluble, Print low-voltage electronic circuits",
-            "low-voltage circuitry applications, touch sensor projects",
-            "225-260 ",
-            "90 -110 ",
-            "Kapton Tape/ Haispray",
-            "1.75mm/3mm",
-        ],
-        [
-            "Carbon Fiber",
-            "Highly Durable, Soluble, Low Warpage, Good layer adhesion",
-            "Frames, supports, propellers, tools, mechanical parts, protective casings, shells, high durability applications",
-            "195-220 ",
-            "50 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Flexible/TPE",
-            "Flexible 3D printing material, excellent abrasion resistance, smooth feeding properties, Durability",
-            "Toys, novelty items, wearable, phone cases, visual products.",
-            "210-225 ",
-            "20-55 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Glow In The Dark",
-            "Minimal Warping, Glow in the Dark properties, durable, not soluble, low shrinkage during cooling",
-            "children's toys, novelty items, wearables, phone cases, visual products.",
-            "185-205 ",
-            "70 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-        [
-            "Amphora",
-            "High strength and very high toughness, FDA food contact compliance, Odor Neutral processing, Styrene free formulation",
-            "Desktop items, Mechanical Parts",
-            "220 - 250",
-            "60 - 70 ",
-            "Blue Painters Tape",
-            "1.75mm/3mm",
-        ],
-    ]
+    filtypes = {
+        "results": [
+            {
+                "properties": "Making durable parts that need to withstand higher temperatures, Easy to print with, strong plastic",
+                "useage": "Legos, instruments, sports equipment, Objects that might be dropped, knife handles, car phone mounts, phone cases, toys, wedding rings",
+                "extruder_temp": "210-250",
+                "bed_temp": "80-100",
+                "bed_adhesion": "Kapton Tape, Hairspray, Test",
+                "diameter": "1, 2",
+                "type": "ABS",
+                "densitygcm3": "1.04",
+                "m_in_1kg_3": "136",
+                "m_in_1kg_175": "400",
+            },
+            {
+                "properties": "Odorless, Low-warp, Eco-Friendly, Less energy to process",
+                "useage": "Food containers such as candy wrappers, biodegradable medical implants, models, proto type parts",
+                "extruder_temp": "190-230",
+                "bed_temp": "60-80",
+                "bed_adhesion": "Blue painters tape, Hairspray",
+                "diameter": "1, 2",
+                "type": "PLA",
+                "densitygcm3": "1.24",
+                "m_in_1kg_3": "114",
+                "m_in_1kg_175": "335",
+            },
+            {
+                "properties": "Non harmful, non-toxic, and environment friendly, Easily be dissolved in water under normal temperature, Easily stripping.",
+                "useage": "paper adhesive, thickener, packaging film in feminine hygiene, adult incontinence products, childrens play putty or slime, freshwater sports fishing",
+                "extruder_temp": "180-230",
+                "bed_temp": "55-60",
+                "bed_adhesion": "Blue Painters Tape",
+                "diameter": "1, 2",
+                "type": "PVA",
+                "densitygcm3": "1.23",
+                "m_in_1kg_3": "115",
+                "m_in_1kg_175": "338",
+            },
+            {
+                "properties": "Extremely durable and prints without odor. Has superior impact resistance that is superior to PET. Low shrinkage, no warping and not brittle.",
+                "useage": "Protective components like phone cases and mechanical parts that require flexibility. Food containers like cups and plates.",
+                "extruder_temp": "220-245",
+                "bed_temp": "70-75",
+                "bed_adhesion": "Blue Painters Tape",
+                "diameter": "1, 2",
+                "type": "PETG",
+                "densitygcm3": "1.27",
+                "m_in_1kg_3": "111",
+                "m_in_1kg_175": "328",
+            },
+            {
+                "properties": "Biodegradable, Great 3D Support material, low-cost",
+                "useage": "costumes, models, miniature figurines, prototyping",
+                "extruder_temp": "220-230",
+                "bed_temp": "50-60",
+                "bed_adhesion": "Kapton Tape, Hairspray",
+                "diameter": "1, 2",
+                "type": "HIPS",
+                "densitygcm3": "1.03",
+                "m_in_1kg_3": "137",
+                "m_in_1kg_175": "404",
+            },
+            {
+                "properties": "strong, lightweight, durable, flexible, wear-resistant, 100% thermoplastic",
+                "useage": "machine parts, mechanical components, structural parts, gears and bearings, dynamic load, containers, tools, consumer products and toys.",
+                "extruder_temp": "210-250",
+                "bed_temp": "60-80",
+                "bed_adhesion": "PVA Based Glue",
+                "diameter": "1, 2",
+                "type": "Nylon",
+                "densitygcm3": "1.52",
+                "m_in_1kg_3": "93",
+                "m_in_1kg_175": "274",
+            },
+            {
+                "properties": "Versatility, Real wood scent, Durability, contain real wood fibers",
+                "useage": "wooden box, wooden figurine, tables, chairs, cups or the likes.",
+                "extruder_temp": "200-260",
+                "bed_temp": "90-110.",
+                "bed_adhesion": "Blue Painters Tape",
+                "diameter": "1, 2",
+                "type": "Wood",
+                "densitygcm3": "1.28",
+                "m_in_1kg_3": "111",
+                "m_in_1kg_175": "325",
+            },
+            {
+                "properties": "Highly Durable, Soluble, Low Warpage, Good layer adhesion",
+                "useage": "Frames, supports, propellers, tools, mechanical parts, protective casings, shells, high durability applications",
+                "extruder_temp": "195-220",
+                "bed_temp": "50-50",
+                "bed_adhesion": "Blue Painters Tape",
+                "diameter": "1, 2",
+                "type": "Carbon Fiber",
+                "densitygcm3": "1.3",
+                "m_in_1kg_3": "109",
+                "m_in_1kg_175": "320",
+            },
+            {
+                "properties": "Flexible 3D printing material, excellent abrasion resistance, smooth feeding properties, Durability",
+                "useage": "Toys, novelty items, wearable, phone cases, visual products.",
+                "extruder_temp": "210-225",
+                "bed_temp": "20-55",
+                "bed_adhesion": "Blue Painters Tape",
+                "diameter": "1, 2",
+                "type": "Flexible/TPE",
+                "densitygcm3": "2.16",
+                "m_in_1kg_3": "66",
+                "m_in_1kg_175": "193",
+            },
+        ]
+    }
 
-    if len(filtypes) != Type.query.count():
-        for fil in filtypes:
-            typename = fil[0]
+    if len(filtypes["results"]) != Type.query.count():
+        for fil in filtypes["results"]:
+            typename = fil["type"]
             cnt = Type.query.filter(Type.type == typename).count()
             if cnt == 0:
-                etemp = list(map(str.strip, fil[3].split("-")))
-                bedtemp = list(map(str.strip, fil[4].split("-")))
-                adh = list(map(str.strip, fil[5].split("/")))
-                diam = list(map(str.strip, fil[6].split("/")))
-                use = list(map(str.strip, fil[2].split(",")))
-                prop = list(map(str.strip, fil[1].split(",")))
+                etemp = list(map(str.strip, fil["extruder_temp"].split("-")))
+                bedtemp = list(map(str.strip, fil["bed_temp"].split("-")))
+                adh = list(map(str.strip, fil["bed_adhesion"].split("/")))
+                diam = list(map(str.strip, fil["diameter"].split("/")))
+                use = list(map(str.strip, fil["useage"].split(",")))
+                prop = list(map(str.strip, fil["properties"].split(",")))
 
                 new = Type(
                     type=typename,
@@ -261,54 +218,197 @@ def populate_types():
                     bed_temp=bedtemp,
                     bed_adhesion=adh,
                     diameter=diam,
+                    densitygcm3=fil["densitygcm3"],
+                    m_in_1kg_3=fil["m_in_1kg_3"],
+                    m_in_1kg_175=fil["m_in_1kg_175"],
+                    userid=1,
                 )
                 db.session.add(new)
                 db.session.commit()
 
-def convert_color_to_hex(color:str):
+
+def convert_color_to_hex(color: str):
     valid, newcolor = valid_color(color)
     if valid:
         return colors.to_hex(newcolor)
     else:
-        flash('No color found', category='error')
-        return '000000'
+        flash("No color found", category="error")
+        return "000000"
 
-def valid_color(color:str):
-    valid_colors = ["MediumVioletRed","DeepPink","PaleVioletRed","HotPink","LightPink","Pink","DarkRed","Red","Firebrick","Crimson","IndianRed","LightCoral","Salmon","DarkSalmon","LightSalmon","OrangeRed","Tomato","DarkOrange","Coral","Orange","DarkKhaki","Gold","Khaki","PeachPuff","Yellow","PaleGoldenrod","Moccasin","PapayaWhip","LightGoldenrodYellow","LemonChiffon","LightYellow","Maroon","Brown","SaddleBrown","Sienna","Chocolate","DarkGoldenrod","Peru","RosyBrown","Goldenrod","SandyBrown","Tan","Burlywood","Wheat","NavajoWhite","Bisque","BlanchedAlmond","Cornsilk","DarkGreen","Green","DarkOliveGreen","ForestGreen","SeaGreen","Olive","OliveDrab","MediumSeaGreen","LimeGreen","Lime","SpringGreen","MediumSpringGreen","DarkSeaGreen","MediumAquamarine","YellowGreen","LawnGreen","Chartreuse","LightGreen","GreenYellow","PaleGreen","Teal","DarkCyan","LightSeaGreen","CadetBlue","DarkTurquoise","MediumTurquoise","Turquoise","Aqua","Cyan","Aquamarine","PaleTurquoise","LightCyan","Navy","DarkBlue","MediumBlue","Blue","MidnightBlue","RoyalBlue","SteelBlue","DodgerBlue","DeepSkyBlue","CornflowerBlue","SkyBlue","LightSkyBlue","LightSteelBlue","LightBlue","PowderBlue","Indigo","Purple","DarkMagenta","DarkViolet","DarkSlateBlue","BlueViolet","DarkOrchid","Fuchsia","Magenta","SlateBlue","MediumSlateBlue","MediumOrchid","MediumPurple","Orchid","Violet","Plum","Thistle","Lavender","White","MistyRose","AntiqueWhite","Linen","Beige","WhiteSmoke","LavenderBlush","OldLace","AliceBlue","Seashell","GhostWhite","Honeydew","FloralWhite","Azure","MintCream","Snow","Ivory","White","Black","DarkSlateGray","DimGray","SlateGray","Gray","LightSlateGray","DarkGray","Silver","LightGray","Gainsboro"]
-    origcolor = color.replace(' ','')
-    colorsplit = color.split(' ')
-    
+
+def valid_color(color: str):
+    valid_colors = [
+        "MediumVioletRed",
+        "DeepPink",
+        "PaleVioletRed",
+        "HotPink",
+        "LightPink",
+        "Pink",
+        "DarkRed",
+        "Red",
+        "Firebrick",
+        "Crimson",
+        "IndianRed",
+        "LightCoral",
+        "Salmon",
+        "DarkSalmon",
+        "LightSalmon",
+        "OrangeRed",
+        "Tomato",
+        "DarkOrange",
+        "Coral",
+        "Orange",
+        "DarkKhaki",
+        "Gold",
+        "Khaki",
+        "PeachPuff",
+        "Yellow",
+        "PaleGoldenrod",
+        "Moccasin",
+        "PapayaWhip",
+        "LightGoldenrodYellow",
+        "LemonChiffon",
+        "LightYellow",
+        "Maroon",
+        "Brown",
+        "SaddleBrown",
+        "Sienna",
+        "Chocolate",
+        "DarkGoldenrod",
+        "Peru",
+        "RosyBrown",
+        "Goldenrod",
+        "SandyBrown",
+        "Tan",
+        "Burlywood",
+        "Wheat",
+        "NavajoWhite",
+        "Bisque",
+        "BlanchedAlmond",
+        "Cornsilk",
+        "DarkGreen",
+        "Green",
+        "DarkOliveGreen",
+        "ForestGreen",
+        "SeaGreen",
+        "Olive",
+        "OliveDrab",
+        "MediumSeaGreen",
+        "LimeGreen",
+        "Lime",
+        "SpringGreen",
+        "MediumSpringGreen",
+        "DarkSeaGreen",
+        "MediumAquamarine",
+        "YellowGreen",
+        "LawnGreen",
+        "Chartreuse",
+        "LightGreen",
+        "GreenYellow",
+        "PaleGreen",
+        "Teal",
+        "DarkCyan",
+        "LightSeaGreen",
+        "CadetBlue",
+        "DarkTurquoise",
+        "MediumTurquoise",
+        "Turquoise",
+        "Aqua",
+        "Cyan",
+        "Aquamarine",
+        "PaleTurquoise",
+        "LightCyan",
+        "Navy",
+        "DarkBlue",
+        "MediumBlue",
+        "Blue",
+        "MidnightBlue",
+        "RoyalBlue",
+        "SteelBlue",
+        "DodgerBlue",
+        "DeepSkyBlue",
+        "CornflowerBlue",
+        "SkyBlue",
+        "LightSkyBlue",
+        "LightSteelBlue",
+        "LightBlue",
+        "PowderBlue",
+        "Indigo",
+        "Purple",
+        "DarkMagenta",
+        "DarkViolet",
+        "DarkSlateBlue",
+        "BlueViolet",
+        "DarkOrchid",
+        "Fuchsia",
+        "Magenta",
+        "SlateBlue",
+        "MediumSlateBlue",
+        "MediumOrchid",
+        "MediumPurple",
+        "Orchid",
+        "Violet",
+        "Plum",
+        "Thistle",
+        "Lavender",
+        "White",
+        "MistyRose",
+        "AntiqueWhite",
+        "Linen",
+        "Beige",
+        "WhiteSmoke",
+        "LavenderBlush",
+        "OldLace",
+        "AliceBlue",
+        "Seashell",
+        "GhostWhite",
+        "Honeydew",
+        "FloralWhite",
+        "Azure",
+        "MintCream",
+        "Snow",
+        "Ivory",
+        "White",
+        "Black",
+        "DarkSlateGray",
+        "DimGray",
+        "SlateGray",
+        "Gray",
+        "LightSlateGray",
+        "DarkGray",
+        "Silver",
+        "LightGray",
+        "Gainsboro",
+    ]
+    origcolor = color.replace(" ", "")
+    colorsplit = color.split(" ")
+
     if origcolor in valid_colors:
-        return [True,origcolor]
+        return [True, origcolor]
     elif len(colorsplit) != 1:
         for color in colorsplit:
             if color in valid_colors:
-                return [True,color]
+                return [True, color]
         else:
-            return [False,'000000']
+            return [False, "000000"]
     else:
-        return [False,'000000']
+        return [False, "000000"]
+
 
 def shorten_url(longurl):
     import requests
     import json
 
     url = "https://api-ssl.bitly.com/v4/shorten"
-    dbtoken = db.session.query(apitoken).filter(apitoken.name == 'bitley').first().token
+    dbtoken = db.session.query(apitoken).filter(apitoken.name == "bitley").first().token
 
-    payload = json.dumps({
-    "domain": "bit.ly",
-    "long_url": f"{longurl}"
-    })
-    headers = {
-    'Content-Type': 'application/json',
-    'Authorization': f'Bearer {dbtoken}'
-    }
+    payload = json.dumps({"domain": "bit.ly", "long_url": f"{longurl}"})
+    headers = {"Content-Type": "application/json", "Authorization": f"Bearer {dbtoken}"}
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
     fulljson = json.loads(response.text)
-    link = fulljson['link']
+    link = fulljson["link"]
     return link
 
 
