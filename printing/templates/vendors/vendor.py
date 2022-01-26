@@ -40,7 +40,7 @@ def vendor_main():
 @login_required
 def vendor_edit(id):
     db_vendor = db.session.query(Vendors).filter_by(id = id).first()
-    form = Filament_form(obj=db_vendor)
+    form = Vendor_form(obj=db_vendor)
     if form.validate_on_submit():
         form.populate_obj(db_vendor)
         db_vendor.userid = current_user.id
@@ -51,6 +51,6 @@ def vendor_edit(id):
     form.process(obj=db_vendor)
     form.referer.data = request.referrer
    
-    vendors = Vendors.query.all()
-    context = {'user': User, 'vendors':vendors, 'form':form}
-    return render_template("/filament/filament_edit.html", **context)
+    vendor = Vendors.query.order_by(Vendors.name).all()
+    context = {'user': User, 'vendors':vendor, 'form':form, 'vendor':db_vendor}
+    return render_template("/vendors/vendor_edit.html", **context)

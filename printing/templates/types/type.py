@@ -31,9 +31,9 @@ def type_main():
         db.session.add(fil)
         db.session.commit()
         return redirect(url_for("type.type_main"))
-    
-    types = Type.query.all()
-    context = {"user": User, "types": types, 'form':form}
+
+    types = db.session.query(Type).all()
+    context = {"user": User, "types": types, "form": form}
     return render_template("/types/type_main.html", **context)
 
 
@@ -44,12 +44,25 @@ def type_edit(id):
     form = Type_form(obj=db_type)
     if form.validate_on_submit():
         form.populate_obj(db_type)
+
         db_type.userid = current_user.id
+
+        useage = form.useage.data
+        db_type.useage = useage.split(", ")
+
+        prop = form.properties.data
+        db_type.properties = prop.split(", ")
+
+        badh = form.bed_adhesion.data
+        db_type.bed_adhesion = badh.split(", ")
+
         db.session.add(db_type)
         db.session.commit()
         return redirect(url_for("type.type_main"))
-    
-    form.process(obj=db_type)
 
+    form.process(obj=db_type)
+    form.useage.data = ", ".join(db_type.useage)
+    form.properties.data = ", ".join(db_type.properties)
+    form.bed_adhesion.data = ", ".join(db_type.bed_adhesion)
     context = {"user": User, "type": db_type, "form": form}
     return render_template("/types/type_edit.html", **context)

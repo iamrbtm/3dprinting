@@ -1,4 +1,4 @@
-{% extends "types/type_submenu.html" %}
+{% extends "vendors/vendor_submenu.html" %}
 {% from "_utilities.html" import render_field, render_select, render_submit %}
 
 
@@ -21,47 +21,30 @@
 <!-- Main Content -->
 {% block content %}
 <br>
-<form method=POST enctype=multipart/form-data action="{{url_for('type.type_edit', id=type.id)}}">
+<form method=POST encvendor=multipart/form-data action="{{url_for('vendor.vendor_edit', id=vendor.id)}}">
     {{ form.csrf_token }}
     <fieldset class="form-field row">
         <div class="col-md-6">
-            {{ render_field(form.type) }}
+            {{ render_field(form.name) }}
         </div>
         <div class="col-md-6">
-            {{ render_field(form.properties) }}
+            {{ render_field(form.url) }}
         </div>
         <div class="col-md-6">
-            {{ render_field(form.useage) }}
+            {{ render_field(form.address) }}
         </div>
         <div class="col-md-6">
-            {{ render_select(form.diameter) }}
+            {{ render_field(form.city) }}
         </div>
         <div class="col-md-6">
-            {{ render_select(form.extruder_temp_from) }}
+            {{ render_select(form.state) }}
         </div>
         <div class="col-md-6">
-            {{ render_select(form.extruder_temp_to) }}
+            {{ render_field(form.zipcode) }}
         </div>
         <div class="col-md-6">
-            {{ render_select(form.bed_temp_from) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_select(form.bed_temp_to) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_field(form.bed_adhesion) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_field(form.densitygcm3) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_field(form.m_in_1kg_175) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_field(form.m_in_1kg_3) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_field(form.submit) }}
+            {{form.referer}}
+            {{ render_submit(form.submit) }}
         </div>
     </fieldset>
 </form>

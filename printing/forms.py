@@ -142,4 +142,5 @@ class Vendor_form(FlaskForm):
     city = StringField("City",[])
     state = SelectField("State",[], choices=states)
     zipcode = StringField("ZipCode",[])
+    referer = HiddenField()
     submit = SubmitField("Submit")
