@@ -99,13 +99,13 @@ class Filament(db.Model):
 
 class Machine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=true)
+    name = db.Column(db.String(50), unique=True)
     purchase_price = db.Column(db.Float)
     purchase_date = db.Column(db.Date)
     make = db.Column(db.String(50))
     model = db.Column(db.String(50))
-    serial_number = db.Column(db.String(50), unique=true)
-    picture = db.Column(db.Blob)
+    serial_number = db.Column(db.String(50), unique=True)
+    picture = db.Column(db.LargeBinary, nullable = True)
     userid = db.Column(db.Integer)
     update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
