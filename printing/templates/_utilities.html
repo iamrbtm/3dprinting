@@ -27,3 +27,12 @@
 {% endfor %}
 </ul>
 {% endmacro %}
+
+{% macro render_relation(field) %}
+{{ field(class="form-control", **kwargs)|safe }}
+<ul>
+{% for error in field.errors %}
+    <li style="color:red;">{{ error }}</li>
+{% endfor %}
+</ul>
+{% endmacro %}

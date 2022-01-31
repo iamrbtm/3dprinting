@@ -9,6 +9,7 @@ from wtforms import (
     SelectMultipleField,
     SubmitField,
     FloatField,
+    FileField,
     HiddenField,
 )
 from wtforms.validators import InputRequired, Email, URL, NumberRange
@@ -142,5 +143,17 @@ class Vendor_form(FlaskForm):
     city = StringField("City",[])
     state = SelectField("State",[], choices=states)
     zipcode = StringField("ZipCode",[])
+    referer = HiddenField()
+    submit = SubmitField("Submit")
+    
+class Machine_form(FlaskForm):
+    name = StringField("Name",[])
+    purchase_price = StringField("Purchase Price",[])
+    purchase_date = StringField("Purchase Date",[])
+    make = StringField("Make",[])
+    model = StringField("Model",[])
+    serial_number = StringField("Serial Number",[])
+    picture = FileField("Machine Picture",[])
+    mach_icon = FileField("Machine Icon",[])
     referer = HiddenField()
     submit = SubmitField("Submit")

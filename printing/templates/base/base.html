@@ -16,30 +16,39 @@
 
    <title>{% block title %}{% endblock %}</title>
    <style>
+      :root{
+         --background-yellow: #fbf4e7;
+         --primary: #253C6A;
+         --secondary: #6A5325;
+         --white: #ffffff;
+         --nav-link-text: rgba(255, 255, 255, 0.6);
+         --other: ;
+
+      }
       body {
-         background-color: #fbf4e7;
+         background-color: var(--background-yellow);
       }
 
       .btn-primary,
       .btn-primary:hover,
       .btn-primary:active,
       .btn-primary:visited {
-         background-color: #253c6a !important;
+         background-color: var(--primary) !important;
       }
 
       .btn-secondary,
       .btn-secondary:hover,
       .btn-secondary:active,
       .btn-secondary:visited {
-         background-color: #6a5325 !important;
+         background-color: var(--secondary) !important;
       }
 
       .navbar-sub-customclass {
-         background-color: #6a5325;
+         background-color: var(--secondary);
       }
 
       .navbar-customclass {
-         background-color: #253c6a;
+         background-color: var(--primary);
       }
 
       /* changing brand text color*/
@@ -47,13 +56,13 @@
       .navbar-customclass .navbar-text,
       .navbar-sub-customclass .navbar-brand,
       .navbar-sub-customclass .navbar-text {
-         color: #ffffff;
+         color: var(--white);
       }
 
       /* navigation link text color */
       .navbar-customclass .navbar-nav .nav-link,
       .navbar-sub-customclass .navbar-nav .nav-link {
-         color: rgba(255, 255, 255, 0.6);
+         color: var(--nav-link-text);
       }
 
       /* navigation links anchor hover and active styles */
@@ -61,20 +70,20 @@
       .navbar-customclass .nav-item:hover .nav-link,
       .navbar-sub-customclass .nav-item.active .nav-link,
       .navbar-sub-customclass .nav-item:hover .nav-link {
-         color: #fbf4e7;
+         color: var(--background-yellow);
       }
 
       #dropdownUser1 {
-         color: rgba(255, 255, 255, 0.6);
+         color: var(--nav-link-text);
       }
 
       .nav-pills .nav-link {
-         color: #253c6a;
+         color: var(--primary);
       }
 
       .nav-pills .nav-link.active,
       .nav-pills .show>.nav-link {
-         background-color: #6a5325;
+         background-color:var(--secondary);
       }
    </style>
    {% block style %}{% endblock %}

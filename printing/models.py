@@ -105,11 +105,25 @@ class Machine(db.Model):
     make = db.Column(db.String(50))
     model = db.Column(db.String(50))
     serial_number = db.Column(db.String(50), unique=True)
-    picture = db.Column(db.LargeBinary, nullable = True)
+    picture = db.Column(db.String(100))
+    mach_icon = db.Column(db.String(100))
     userid = db.Column(db.Integer)
     update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    #Relationships
+    infourl_rel = db.relationship("Info_url", backref="machine", lazy=True)
 
+
+class Info_url(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(300))
+    description = db.Column(db.Text)
+    catagory = db.Column(db.String(75))
+    userid = db.Column(db.Integer)
+    update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    #forign Keys
+    machinefk = db.Column(db.Integer, db.ForeignKey("machine.id"))
 
 # class <name>(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
