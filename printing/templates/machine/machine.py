@@ -48,9 +48,19 @@ def machine_edit(id):
     db_urs = db.session.query(Machine.infourl_rel).all()
     form = Machine_form(obj=db_mac)
     if form.validate_on_submit():
-        form.populate_obj(db_mac)
+        if form.picture.data:
+            filename = photos.save(form.picture.data)
+            db_mac.picture = filename
+        if form.mach_icon.data:
+            tmbfilename = photos.save(form.mach_icon.data)
+            db_mac.mach_icon = tmbfilename
+        db_mac.name = form.name.data
+        db_mac.purchase_price = form.purchase_price.data
+        db_mac.purchase_date = form.purchase_date.data
+        db_mac.make = form.make.data
+        db_mac.model = form.model.data
+        db_mac.serial_number = form.serial_number.data
         db_mac.userid = current_user.id
-        db.session.add(db_mac)
         db.session.commit()
         return redirect(form.referer.data)
     

@@ -87,6 +87,7 @@ class Filament(db.Model):
     diameter = db.Column(db.Integer)
     url = db.Column(db.String(200))
     purchasedate = db.Column(db.Date)
+    picture = db.Column(db.String(100))
     userid = db.Column(db.Integer)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now

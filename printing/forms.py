@@ -51,6 +51,7 @@ class Filament_form(FlaskForm):
                                choices=[(1,"200g"),(2, "1kg"), (3, "2kg"),(4, "Other")])
     url = StringField("Purchase Website", [])
     purchasedate = DateField("Purchase Date")
+    picture = FileField("Picture",[])
     vendorfk = SelectField("Vendor", [], choices=vendor)
     typefk = SelectField("Type", [], choices=types)
     referer = HiddenField()

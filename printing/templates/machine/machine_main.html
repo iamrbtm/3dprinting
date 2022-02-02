@@ -27,6 +27,7 @@
 <table class="table table-bordered table-hover">
     <thead class="table-secondary">
         <tr>
+            <th></th>
             <th>Name</th>
             <th>Date<span class="small">Purchased</span></th>
             <th>Cost</th>
@@ -36,6 +37,8 @@
     <tbody>
         {% for item in machines %}
         <tr onclick="window.location='{{ url_for("machine.machine_edit", id=item.id) }}';">
+            {% set fn = '/images/' + item.mach_icon %}
+            <td><img src="{{ url_for('static', filename=fn) }}" alt=""></td>
             <td>{{item.name}}</td>
             <td>{{item.purchase_date.strftime('%b %d, %Y')}}</td>
             <td>{{"$%.2f"|format(item.purchase_price)}}</td>
