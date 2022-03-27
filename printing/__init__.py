@@ -31,16 +31,11 @@ def create_app():
     # Secrete Key
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
-    db.init_app(app)
-
     # Database Setup
-    result = choose_database(app)
-    if result[0]:
-        print("Created database!")
-    else:
-        print(result[1])
-        abort(403)
-
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}"
+    db.init_app(app)
+    
     # Migration for Database
     Migrate(app, db)
 
@@ -63,6 +58,7 @@ def create_app():
     from printing.templates.types.type import bp_type
     from printing.templates.vendors.vendor import bp_vendor
     from printing.templates.machine.machine import bp_machine
+    from printing.templates.customer.customer import bp_customer
 
     app.register_blueprint(base, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
@@ -70,6 +66,7 @@ def create_app():
     app.register_blueprint(bp_type, url_prefix="/type")
     app.register_blueprint(bp_vendor, url_prefix="/vendor")
     app.register_blueprint(bp_machine, url_prefix="/machine")
+    app.register_blueprint(bp_customer, url_prefix="/customer")
 
     from printing.models import User
 

@@ -1,0 +1,116 @@
+{% extends "customer/customer_submenu.html" %}
+{% from "_utilities.html" import render_field, render_select %}
+
+
+<!-- Title of the page (what goes on the tab when rendered) -->
+{% block title %}
+{% endblock %}
+
+<!-- Specific Style to this page -->
+{% block style %}
+{% endblock %}
+
+<!-- Any Page Menu Item go here -->
+{% block extra_menu_items %}
+<!--class="nav-link"-->
+{% endblock extra_menu_items %}
+
+<!-- Any Action items go here -->
+{% block action_items %}
+<!--class="dropdown-item"-->
+<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_cust_Modal">Add New Customer</a>
+{% endblock action_items %}
+
+<!-- Main Content -->
+{% block content %}
+<br>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cust in customers %}
+        <tr onclick="window.location='{{ url_for("customer.customer_edit", id=cust.id) }}';">
+            <td>{{cust.fname}} {{cust.lname}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="new_cust_Modal" tabindex="-1" aria-labelledby="new_cust_ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="new_cust_ModalLabel">Add New Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method=POST enctype=multipart/form-data action="{{url_for('customer.customer_main')}}">
+                    {{ form.csrf_token }}
+                    <fieldset class="form-field row">
+                        <div class="col-md-6">
+                            {{ render_field(form.fname) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ render_field(form.lname) }}
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-12">
+                            {{ render_field(form.address) }}
+                            {{ render_field(form.address2) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ render_select(form.city) }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ render_select(form.state) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ render_select(form.zipcode) }}
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-md-6">
+                            {{ render_select(form.phone) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ render_field(form.email) }}
+                        </div>
+                    </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input class="btn btn-primary" type="submit" value="Add Customer">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Scripts needed for this page -->
+{% block scripts %}
+
+<script>
+    var formErrors = {
+        %
+        if form.errors %
+    }
+    true {
+        %
+        else %
+    }
+    false {
+        %
+        endif %
+    };
+
+    $(document).ready(function () {
+        if (formErrors) {
+            $('.modal').modal('show');
+        }
+    });
+</script>
+{% endblock %}

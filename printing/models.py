@@ -126,6 +126,19 @@ class Info_url(db.Model):
     #forign Keys
     machinefk = db.Column(db.Integer, db.ForeignKey("machine.id"))
 
+class Customer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fname = db.Column(db.String(150))
+    lname = db.Column(db.String(150))
+    address = db.Column(db.String(150))
+    address2 = db.Column(db.String(150))
+    city = db.Column(db.String(150))
+    state = db.Column(db.String(2))
+    zipcode = db.Column(db.String(20))
+    phone = db.Column(db.String(20))
+    email = db.Column(db.String(150), unique=True)
+    userid = db.Column(db.Integer)
+    
 # class <name>(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 

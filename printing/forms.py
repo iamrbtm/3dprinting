@@ -46,12 +46,18 @@ class Filament_form(FlaskForm):
     priceperroll = FloatField(
         "Cost of Roll", [NumberRange(min=0.01, max=9999, message="Enter numbers only")]
     )
-    diameter = SelectField("Filament Diameter", [], coerce=int, choices=[(1, "1.75mm"), (2, "3mm")])
-    length_spool = SelectField("Length of Spool", [], coerce=int, 
-                               choices=[(1,"200g"),(2, "1kg"), (3, "2kg"),(4, "Other")])
+    diameter = SelectField(
+        "Filament Diameter", [], coerce=int, choices=[(1, "1.75mm"), (2, "3mm")]
+    )
+    length_spool = SelectField(
+        "Length of Spool",
+        [],
+        coerce=int,
+        choices=[(1, "200g"), (2, "1kg"), (3, "2kg"), (4, "Other")],
+    )
     url = StringField("Purchase Website", [])
     purchasedate = DateField("Purchase Date")
-    picture = FileField("Picture",[])
+    picture = FileField("Picture", [])
     vendorfk = SelectField("Vendor", [], choices=vendor)
     typefk = SelectField("Type", [], choices=types)
     referer = HiddenField()
@@ -123,38 +129,60 @@ class Type_form(FlaskForm):
     properties = StringField("Properties", [])
     useage = StringField("Uses", [])
     diameter = SelectMultipleField(
-        u"Diameter", [], coerce=int, choices=[(1, "1.75mm"), (2, "3mm")], default=[1, 2]
+        "Diameter", [], coerce=int, choices=[(1, "1.75mm"), (2, "3mm")], default=[1, 2]
     )
-    extruder_temp_from = SelectField(u"End Temp Start Range", choices=ext_temps)
-    extruder_temp_to = SelectField(u"End Temp End Range", choices=ext_temps)
-    bed_temp_from = SelectField(u"Bed Temp From Range", choices=bed_temps)
-    bed_temp_to = SelectField(u"Bed Temp To Range", choices=bed_temps)
-    bed_adhesion = StringField(u"Bed Adhesion")
-    densitygcm3 = DecimalField(u"Density")
-    m_in_1kg_175 = DecimalField(u"Meters in 1 KG (1.75mm diameter)")
-    m_in_1kg_3 = DecimalField(u"Meters in 1 KG (3mm diameter)")
-    submit = SubmitField(u"Submit")
+    extruder_temp_from = SelectField("End Temp Start Range", choices=ext_temps)
+    extruder_temp_to = SelectField("End Temp End Range", choices=ext_temps)
+    bed_temp_from = SelectField("Bed Temp From Range", choices=bed_temps)
+    bed_temp_to = SelectField("Bed Temp To Range", choices=bed_temps)
+    bed_adhesion = StringField("Bed Adhesion")
+    densitygcm3 = DecimalField("Density")
+    m_in_1kg_175 = DecimalField("Meters in 1 KG (1.75mm diameter)")
+    m_in_1kg_3 = DecimalField("Meters in 1 KG (3mm diameter)")
+    submit = SubmitField("Submit")
 
 
 class Vendor_form(FlaskForm):
     states = lambda: [(c.abr, c.state) for c in States.query.all()]
-    name = StringField("Name",[InputRequired("Please enter the name of the compnay you used to purchase from.")])
-    url = StringField("URL",[])
-    address = StringField("Address",[])
-    city = StringField("City",[])
-    state = SelectField("State",[], choices=states)
-    zipcode = StringField("ZipCode",[])
+    name = StringField(
+        "Name",
+        [
+            InputRequired(
+                "Please enter the name of the compnay you used to purchase from."
+            )
+        ],
+    )
+    url = StringField("URL", [])
+    address = StringField("Address", [])
+    city = StringField("City", [])
+    state = SelectField("State", [], choices=states)
+    zipcode = StringField("ZipCode", [])
     referer = HiddenField()
     submit = SubmitField("Submit")
-    
+
+
 class Machine_form(FlaskForm):
-    name = StringField("Name",[])
-    purchase_price = StringField("Purchase Price",[])
-    purchase_date = StringField("Purchase Date",[])
-    make = StringField("Make",[])
-    model = StringField("Model",[])
-    serial_number = StringField("Serial Number",[])
-    picture = FileField("Machine Picture",[])
-    mach_icon = FileField("Machine Icon",[])
+    name = StringField("Name", [])
+    purchase_price = StringField("Purchase Price", [])
+    purchase_date = StringField("Purchase Date", [])
+    make = StringField("Make", [])
+    model = StringField("Model", [])
+    serial_number = StringField("Serial Number", [])
+    picture = FileField("Machine Picture", [])
+    mach_icon = FileField("Machine Icon", [])
     referer = HiddenField()
     submit = SubmitField("Submit")
+
+
+class customer_form(FlaskForm):
+    states = lambda: [(c.abr, c.state) for c in States.query.all()]
+    fname = StringField("First Name", [InputRequired()])
+    lname = StringField("Last Name", [InputRequired()])
+    company = StringField("Company")
+    address = StringField("Address", [])
+    address2 = StringField("Address2", [])
+    city = StringField("City", [])
+    state = SelectField("State", [], choices=states)
+    zipcode = StringField("Zip Code", [])
+    phone = StringField("Phone", [])
+    email = StringField("Email Address", [InputRequired(), Email()])
