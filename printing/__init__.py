@@ -20,11 +20,11 @@ def create_app():
     app = Flask(__name__)
 
     # Flask-Uploads & Static
-    if os.environ.get("UPLOADS_USE") == "True":
-        app.config["UPLOADED_PHOTOS_DEST"] = "printing/static/images"
-        app.config["UPLOADED_UPLOADS_DEST"] = "printing/static/uploads"
-        configure_uploads(app, photos)
-        configure_uploads(app, uploads)
+    # if os.environ.get("UPLOADS_USE") == "True":
+    app.config["UPLOADED_PHOTOS_DEST"] = "printing/static/images"
+    app.config["UPLOADED_UPLOADS_DEST"] = "printing/static/uploads"
+    configure_uploads(app, photos)
+    configure_uploads(app, uploads)
 
     app._static_folder = "static"
 
@@ -33,9 +33,11 @@ def create_app():
 
     # Database Setup
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}"
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = f"mysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}"
     db.init_app(app)
-    
+
     # Migration for Database
     Migrate(app, db)
 

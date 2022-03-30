@@ -95,7 +95,9 @@ class Filament(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     vendorfk = db.Column(db.Integer, db.ForeignKey("vendors.id"))
     typefk = db.Column(db.Integer, db.ForeignKey("type.id"))
+    # Relationships
     type_rel = db.relationship("Type", backref="filament", lazy=True)
+    orders_rel = db.relationship("Orders", backref="filament", lazy=True)
 
 
 class Machine(db.Model):
@@ -109,10 +111,13 @@ class Machine(db.Model):
     picture = db.Column(db.String(100))
     mach_icon = db.Column(db.String(100))
     userid = db.Column(db.Integer)
-    update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    update_time = db.Column(
+        db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
+    )
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    #Relationships
+    # Relationships
     infourl_rel = db.relationship("Info_url", backref="machine", lazy=True)
+    orders_rel = db.relationship("Orders", backref="machine", lazy=True)
 
 
 class Info_url(db.Model):
@@ -121,10 +126,13 @@ class Info_url(db.Model):
     description = db.Column(db.Text)
     catagory = db.Column(db.String(75))
     userid = db.Column(db.Integer)
-    update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    update_time = db.Column(
+        db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
+    )
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    #forign Keys
+    # forign Keys
     machinefk = db.Column(db.Integer, db.ForeignKey("machine.id"))
+
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -138,7 +146,23 @@ class Customer(db.Model):
     phone = db.Column(db.String(20))
     email = db.Column(db.String(150), unique=True)
     userid = db.Column(db.Integer)
-    
+    # Relationship
+    orders_rel = db.relationship("Orders", backref="customer", lazy=True)
+
+
+class Orders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    userid = db.Column(db.Integer)
+    update_time = db.Column(
+        db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
+    )
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    # Forign Key
+    machinefk = db.Column(db.Integer, db.ForeignKey("machine.id"))
+    customerfk = db.Column(db.Integer, db.ForeignKey("customer.id"))
+    filamentfk = db.Column(db.Integer, db.ForeignKey("filament.id"))
+
+
 # class <name>(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 

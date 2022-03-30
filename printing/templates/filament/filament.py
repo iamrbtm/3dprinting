@@ -25,7 +25,7 @@ bp_filament = Blueprint("filament", __name__)
 @login_required
 def filament_main():
     form = Filament_form()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         fil = Filament()
         if form.picture.data:
             filename = photos.save(form.picture.data)

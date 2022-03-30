@@ -24,7 +24,7 @@ bp_vendor = Blueprint("vendor", __name__)
 @login_required
 def vendor_main():
     form = Vendor_form()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         newvendor = Vendors()
         form.populate_obj(newvendor)
         newvendor.userid = current_user.id

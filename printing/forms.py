@@ -169,7 +169,6 @@ class Machine_form(FlaskForm):
     model = StringField("Model", [])
     serial_number = StringField("Serial Number", [])
     picture = FileField("Machine Picture", [])
-    mach_icon = FileField("Machine Icon", [])
     referer = HiddenField()
     submit = SubmitField("Submit")
 

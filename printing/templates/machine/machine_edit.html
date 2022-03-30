@@ -18,8 +18,11 @@
             <form method=POST enctype=multipart/form-data action="{{url_for('machine.machine_edit', id=machine.id)}}">
                 {{ form.csrf_token }}
                 <fieldset class="form-field row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         {{ render_field(form.name) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ render_field(form.picture) }}
                     </div>
                     <div class="col-md-6">
                         {{ render_field(form.purchase_date) }}
@@ -35,12 +38,6 @@
                     </div>
                     <div class="col-md-4">
                         {{ render_field(form.serial_number) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ render_field(form.picture) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ render_field(form.mach_icon) }}
                     </div>
                     <div class="row"></div>
                     <h5>URLS</h5>

@@ -18,17 +18,24 @@ from printing.forms import *
 from printing.utilities import *
 import datetime
 
+
 bp_machine = Blueprint("machine", __name__)
 
 
 @bp_machine.route("/", methods=["GET", "POST"])
 @login_required
 def machine_main():
+    from .machine_process import resize_images
     form = Machine_form()
     if form.validate_on_submit():
         newmachine = Machine()
         form.populate_obj(newmachine)
         newmachine.userid = current_user.id
+        if form.picture.data:
+            filename = photos.save(form.picture.data)
+            photonames = resize_images(filename, form.name.data)
+            newmachine.picture = photonames['large']
+            newmachine.mach_icon = photonames['thumb']
         db.session.add(newmachine)
         db.session.commit()
         return redirect(url_for("machine.machine_main"))
@@ -43,17 +50,17 @@ def machine_main():
 @bp_machine.route("/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 def machine_edit(id):
-    
+    from .machine_process import resize_images
+
     db_mac = db.session.query(Machine).filter_by(id = id).first()
     db_urs = db.session.query(Machine.infourl_rel).all()
     form = Machine_form(obj=db_mac)
     if form.validate_on_submit():
         if form.picture.data:
             filename = photos.save(form.picture.data)
-            db_mac.picture = filename
-        if form.mach_icon.data:
-            tmbfilename = photos.save(form.mach_icon.data)
-            db_mac.mach_icon = tmbfilename
+            photonames = resize_images(filename, form.name.data)
+            db_mac.picture = photonames['large']
+            db_mac.mach_icon = photonames['thumb']
         db_mac.name = form.name.data
         db_mac.purchase_price = form.purchase_price.data
         db_mac.purchase_date = form.purchase_date.data
