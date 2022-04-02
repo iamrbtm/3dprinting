@@ -185,3 +185,4 @@ class customer_form(FlaskForm):
     zipcode = StringField("Zip Code", [])
     phone = StringField("Phone", [])
     email = StringField("Email Address", [InputRequired(), Email()])
+

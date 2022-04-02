@@ -61,6 +61,7 @@ def create_app():
     from printing.templates.vendors.vendor import bp_vendor
     from printing.templates.machine.machine import bp_machine
     from printing.templates.customer.customer import bp_customer
+    from printing.templates.orders.orders import bp_order
 
     app.register_blueprint(base, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
@@ -69,6 +70,8 @@ def create_app():
     app.register_blueprint(bp_vendor, url_prefix="/vendor")
     app.register_blueprint(bp_machine, url_prefix="/machine")
     app.register_blueprint(bp_customer, url_prefix="/customer")
+    app.register_blueprint(bp_order, url_prefix="/order")
+
 
     from printing.models import User
 

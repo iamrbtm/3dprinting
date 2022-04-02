@@ -99,6 +99,8 @@ class Filament(db.Model):
     type_rel = db.relationship("Type", backref="filament", lazy=True)
     orders_rel = db.relationship("Orders", backref="filament", lazy=True)
 
+    def dropdown_display(self):
+        return self.name +" ("+self.type_rel.type+")"
 
 class Machine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -149,6 +151,8 @@ class Customer(db.Model):
     # Relationship
     orders_rel = db.relationship("Orders", backref="customer", lazy=True)
 
+    def fullname(self):
+        return self.fname + " " + self.lname
 
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
