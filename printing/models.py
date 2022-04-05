@@ -169,20 +169,6 @@ class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_needed = db.Column(db.Date)
     project_name = db.Column(db.String(100), unique=True)
-    userid = db.Column(db.Integer)
-    update_time = db.Column(
-        db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
-    )
-    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    # Forign Key
-    customerfk = db.Column(db.Integer, db.ForeignKey("customer.id"))
-    order_status = db.Column(db.Integer, db.ForeignKey("status.id"))
-    # Relationship
-    orderitems = db.relationship("Order_lineitems", backref="orders", lazy=True)
-
-
-class Order_lineitems(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     qty = db.Column(db.Integer)
     weight_in_g = db.Column(db.String(10))
     time_to_print = db.Column(db.String(50))
@@ -194,10 +180,14 @@ class Order_lineitems(db.Model):
     )
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     # Forign Key
+    customerfk = db.Column(db.Integer, db.ForeignKey("customer.id"))
+    order_status = db.Column(db.Integer, db.ForeignKey("status.id"))
     machinefk = db.Column(db.Integer, db.ForeignKey("machine.id"))
     filamentfk = db.Column(db.Integer, db.ForeignKey("filament.id"))
-    project_status = db.Column(db.Integer, db.ForeignKey("status.id"))
-    orderfk = db.Column(db.Integer, db.ForeignKey("orders.id"))
+    # Relationship
+    machine_rel = db.relationship("Machine", backref="orders", lazy=True)
+    filament_rel = db.relationship("Filament", backref="orders", lazy=True)
+    status_rel = db.relationship("Status", backref="orders", lazy=True)
 
 
 class Status(db.Model):

@@ -32,16 +32,17 @@ def customer_main():
         db.session.add(cust)
         db.session.commit()
         return redirect(url_for("customer.customer_main"))
-    
+
     customers = Customer.query.all()
-    context = {'user': User, 'customers': customers, 'form':form}
+    context = {"user": User, "customers": customers, "form": form}
     return render_template("/customer/customer_main.html", **context)
 
-@bp_customer.route("/edit/<int:id>", methods=["GET", "POST"])
+
+@bp_customer.route("/detail/<int:id>", methods=["GET", "POST"])
 @login_required
-def customer_edit(id):
-    
-    db_cust = db.session.query(Customer).filter_by(id = id).first()
+def customer_detail(id):
+
+    db_cust = db.session.query(Customer).filter_by(id=id).first()
     form = customer_form(obj=db_cust)
     if form.validate_on_submit():
         db_cust.fname = form.fname.data
@@ -56,16 +57,34 @@ def customer_edit(id):
         db_cust.userid = current_user.id
         db_cust.customer_status = form.customer_status.data
         db.session.commit()
-        return redirect(url_for('customer.customer_main'))   
-     
+        return redirect(url_for("customer.customer_main"))
+
     form.process(obj=db_cust)
-   
-    context = {'user': User, 'form':form, 'customer':db_cust}
-    return render_template("/customer/customer_edit.html", **context)
+
+    currentorders = (
+        Orders.query.filter(Orders.customerfk == id)
+        .filter(Orders.order_status != 8)
+        .count()
+    )
+    pastorders = (
+        Orders.query.filter(Orders.customerfk == id)
+        .filter(Orders.order_status == 8)
+        .count()
+    )
+
+    context = {
+        "user": User,
+        "form": form,
+        "customer": db_cust,
+        "currentorders": currentorders,
+        "pastorders": pastorders,
+    }
+    return render_template("/customer/customer_detail.html", **context)
+
 
 @bp_customer.route("/delete/<int:id>", methods=["GET", "POST"])
 @login_required
 def customer_delete(id):
     db.session.query(Customer).filter(Customer.id == id).delete()
     db.session.commit()
-    return redirect(url_for('customer.customer_main'))
+    return redirect(url_for("customer.customer_main"))

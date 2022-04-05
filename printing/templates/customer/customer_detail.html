@@ -1,0 +1,158 @@
+{% extends "customer/customer_submenu.html" %}
+{% from "_utilities.html" import render_field_sm, render_select %}
+
+
+<!-- Title of the page (what goes on the tab when rendered) -->
+{% block title %}
+{% endblock %}
+
+<!-- Specific Style to this page -->
+{% block style %}
+{% endblock %}
+
+<!-- Any Page Menu Item go here -->
+{% block extra_menu_items %}
+<!--class="nav-link"-->
+{% endblock extra_menu_items %}
+
+<!-- Any Action items go here -->
+{% block action_items %}
+<!--class="dropdown-item"-->
+{% endblock action_items %}
+
+<!-- Main Content -->
+{% block content %}
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills me-3 col-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</button>
+        <button class="nav-link" id="v-pills-currentorders-tab" data-bs-toggle="pill"
+            data-bs-target="#v-pills-currentorders" type="button" role="tab" aria-controls="v-pills-currentorders"
+            aria-selected="false">Current Orders <span class="badge bg-primary">{{currentorders}}</span></button>
+        <button class="nav-link" id="v-pills-pastorders-tab" data-bs-toggle="pill" data-bs-target="#v-pills-pastorders"
+            type="button" role="tab" aria-controls="v-pills-pastorders" aria-selected="false">Past Orders <span class="badge bg-primary">{{pastorders}}</span></button>
+        <button class="nav-link" id="v-pills-editdetails-tab" data-bs-toggle="pill"
+            data-bs-target="#v-pills-editdetails" type="button" role="tab" aria-controls="v-pills-editdetails"
+            aria-selected="false">Edit Details</button>
+    </div>
+    <div class="tab-content col-10 pe-4" id="v-pills-tabContent">
+        <!-- Home -->
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+        </div>
+
+        <!-- Current Orders -->
+        <div class="tab-pane fade" id="v-pills-currentorders" role="tabpanel"
+            aria-labelledby="v-pills-currentorders-tab">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Project Name</th>
+                        <th>Date Requested</th>
+                        <th>Machine</th>
+                        <th style="width: 5px;"></th>
+                        <th>Filament</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in customer.orders_rel %}
+                    {% if item.order_status != 8 %}
+                    <tr>
+                        <td style="background-color: {{item.status_rel.color}};width:5px;" data-bs-toggle="tooltip" data-bs-placement="top" title="{{item.status_rel.status}} - {{item.status_rel.description}}"></td>
+                        <td>{{item.project_name}}</td>
+                        <td>{{item.date_needed}}</td>
+                        <td>{{item.machine_rel.name}}</td>
+                        <td style="background-color: {{item.filament_rel.colorhex}}; width: 5px;"></td>
+                        <td>{{item.filament_rel.name}} ({{item.filament_rel.type_rel.type}})</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Past Orders -->
+        <div class="tab-pane fade" id="v-pills-pastorders" role="tabpanel" aria-labelledby="v-pills-pastorders-tab">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Project Name</th>
+                        <th>Date Requested</th>
+                        <th>Machine</th>
+                        <th style="width: 5px;"></th>
+                        <th>Filament</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in customer.orders_rel %}
+                    {% if item.order_status == 8 %}
+                    <tr>
+                        <td style="background-color: {{item.status_rel.color}};width:5px;" data-bs-toggle="tooltip" data-bs-placement="top" title="{{item.status_rel.status}} - {{item.status_rel.description}}"></td>
+                        <td>{{item.project_name}}</td>
+                        <td>{{item.date_needed}}</td>
+                        <td>{{item.machine_rel.name}}</td>
+                        <td style="background-color: {{item.filament_rel.colorhex}}; width: 5px;"></td>
+                        <td>{{item.filament_rel.name}} ({{item.filament_rel.type_rel.type}})</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+        <!-- Edit Details -->
+        <div class="tab-pane fade" id="v-pills-editdetails" role="tabpanel" aria-labelledby="v-pills-editdetails-tab">
+            <form method=POST enctype=multipart/form-data
+                action="{{url_for('customer.customer_detail', id=customer.id)}}">
+                {{ form.csrf_token }}
+                <fieldset class="form-field row">
+                    <div class="col-md-9">
+                        {{ render_field_sm(form.company) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ render_field_sm(form.fname) }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ render_field_sm(form.lname) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-9">
+                        {{ render_field_sm(form.address) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-4">
+                        {{ render_field_sm(form.city) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ render_field_sm(form.state) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.zipcode) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.phone) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.email) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.customer_status) }}
+                    </div>
+                    <div class="col-md-4">
+                        <input class="btn btn-primary" type="submit" value="Edit Customer">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- Scripts needed for this page -->
+{% block scripts %}
+{% endblock %}

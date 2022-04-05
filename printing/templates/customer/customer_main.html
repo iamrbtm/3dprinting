@@ -80,7 +80,7 @@
                 <tbody>
                     {% for cust in customers %}
                     {% if cust.customer_status == 1 %}
-                    <tr onclick="window.location='{{ url_for("customer.customer_edit", id=cust.id) }}';">
+                    <tr onclick="window.location='{{ url_for("customer.customer_detail", id=cust.id) }}';">
                         <td style="background-color:{{cust.status_rel.color}} ; width:5px;"></td>
                         <td>{{cust.fullname()}}</td>
                         <td>{{cust.email}}</td>
@@ -105,7 +105,7 @@
                 <tbody>
                     {% for cust in customers %}
                     {% if cust.customer_status != 1 %}
-                    <tr onclick="window.location='{{ url_for("customer.customer_edit", id=cust.id) }}';">
+                    <tr onclick="window.location='{{ url_for("customer.customer_detail", id=cust.id) }}';">
                         <td style="background-color:{{cust.status_rel.color}} ; width:5px;"></td>
                         <td>{{cust.fname}} {{cust.lname}}</td>
                     </tr>
