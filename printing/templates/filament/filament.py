@@ -34,6 +34,7 @@ def filament_main():
             fil.picture = newfile+ext[1]
             os.rename('printing/static/images/'+filename, 'printing/static/images/'+newfile+ext[1])
         form.populate_obj(fil)
+        fil.picture = newfile+ext[1]
         fil.userid = current_user.id
         fil.colorhex = convert_color_to_hex(form.color.data)
         if form.url.data != '':
@@ -71,6 +72,7 @@ def filament_edit(id):
         db_fil.vendorfk = form.vendorfk.data
         db_fil.typefk = form.typefk.data
         db_fil.userid = current_user.id
+        db_fil.fil_status = form.fil_status.data
         db.session.commit()
         return redirect(form.referer.data)
     

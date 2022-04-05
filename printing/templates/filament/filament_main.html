@@ -1,5 +1,5 @@
 {% extends "filament/filament_submenu.html" %}
-{% from "_utilities.html" import render_field, render_select %}
+{% from "_utilities.html" import render_field, render_select, render_field_sm %}
 
 
 <!-- Title of the page (what goes on the tab when rendered) -->
@@ -47,19 +47,20 @@
                 <thead class="table-secondary">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>Name</th>
                         <th>Diameter</th>
                         <th>Length</th>
                         <th>Cost</th>
                         <th>Date<span class="small">Purchased</span></th>
                         <th>URL</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in fils %}
                     {% if item.typefk == type.id %}
                     <tr onclick="window.location='{{ url_for("filament.filament_edit", id=item.id) }}';">
+                        <td style="background-color:{{item.status_rel.color}} ; width:5px;"></td>
                         {% if item.picture %}
                         {% set fn = '/images/' + item.picture %}
                         <td><img src="{{ url_for('static', filename=fn) }}" alt="" width="50px" height="50px"></td>
@@ -79,9 +80,7 @@
                         <td>{{item.purchasedate.strftime('%b %d, %Y')}}</td>
                         <td><a href="{{item.url}}" target="_blank"
                                 rel="noopener noreferrer">{{item.url}}</a></td>
-                        {% if item.colorhex != "" %}
-                        <td style="background-color: {{item.colorhex}};"></td>
-                        {% endif %}
+                        
                     </tr>
                     {% endif %}
                     {% endfor %}
@@ -109,37 +108,40 @@
                     {{ form.csrf_token }}
                     <fieldset class="form-field row">
                         <div class="col-md-12">
-                            {{ render_field(form.name) }}
+                            {{ render_field_sm(form.name) }}
                         </div>
                         <div class="row"></div>
                         <div class="col-md-3">
-                            {{ render_field(form.color) }}
+                            {{ render_field_sm(form.color) }}
                         </div>
                         <div class="col-md-3">
-                            {{ render_select(form.typefk) }}
+                            {{ render_field_sm(form.typefk) }}
                         </div>
                         <div class="col-md-3">
-                            {{ render_select(form.diameter) }}
+                            {{ render_field_sm(form.diameter) }}
                         </div>
                         <div class="col-md-3">
-                            {{ render_select(form.length_spool) }}
+                            {{ render_field_sm(form.length_spool) }}
                         </div>
                         <div class="row"></div>
                         <div class="col-md-4">
-                            {{ render_select(form.vendorfk) }}
+                            {{ render_field_sm(form.vendorfk) }}
                         </div>
                         <div class="col-md-4">
-                            {{ render_field(form.priceperroll) }}
+                            {{ render_field_sm(form.priceperroll) }}
                         </div>
                         <div class="col-md-4">
-                            {{ render_field(form.purchasedate) }}
+                            {{ render_field_sm(form.purchasedate) }}
                         </div>
                         <div class="row"></div>
-                        <div class="col-md-6">
-                            {{ render_field(form.url) }}
+                        <div class="col-md-4">
+                            {{ render_field_sm(form.url) }}
                         </div>
-                        <div class="col-md-6">
-                            {{ render_field(form.picture) }}
+                        <div class="col-md-4">
+                            {{ render_field_sm(form.picture) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ render_field_sm(form.fil_status) }}
                         </div>
                         <div class="row"></div>
                         <div class="col-md-4">

@@ -23,13 +23,16 @@ bp_order = Blueprint("order", __name__)
 @bp_order.route('/', methods=['GET', 'POST'])
 def order_home():
     from printing.templates.orders.process_orders import get_raw_data
-    get_raw_data()
+    parsetime, parseweight = get_raw_data()
     form = Order_Form()
     
     if form.validate_on_submit():
-        print('Customer: '+form.customerfk.data)
-        print('Machine: '+form.machinefk.data)
-        print('Filament: '+form.filamentfk.data)
+        neworder = Orders()
+        form.populate_obj(neworder)
+        neworder.userid = current_user.id
+        db.session.add(neworder)
+        db.session.commit()
+        return redirect(url_for("order.order_home"))
     
     context = {'user': User, 'form':form}
     return render_template("/orders/order_home.html", **context)

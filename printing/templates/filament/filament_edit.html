@@ -1,5 +1,5 @@
 {% extends "filament/filament_submenu.html" %}
-{% from "_utilities.html" import render_field, render_select, render_submit %}
+{% from "_utilities.html" import render_field_sm, render_submit %}
 
 {% block action_items %}
 <!--class="dropdown-item"-->
@@ -12,34 +12,37 @@
     {{ form.csrf_token }}
     <fieldset class="form-field row">
         <div class="col-md-8">
-            {{ render_field(form.name) }}
+            {{ render_field_sm(form.name) }}
         </div>
         <div class="col-md-4">
-            {{ render_field(form.picture) }}
+            {{ render_field_sm(form.picture) }}
         </div>
         <div class="col-md-3">
-            {{ render_field(form.color) }}
+            {{ render_field_sm(form.color) }}
         </div>
         <div class="col-md-3">
-            {{ render_select(form.typefk) }}
+            {{ render_field_sm(form.typefk) }}
         </div>
         <div class="col-md-3">
-            {{ render_select(form.diameter) }}
+            {{ render_field_sm(form.diameter) }}
         </div>
         <div class="col-md-3">
-            {{ render_select(form.length_spool) }}
+            {{ render_field_sm(form.length_spool) }}
         </div>
         <div class="col-md">
-            {{ render_select(form.vendorfk) }}
+            {{ render_field_sm(form.vendorfk) }}
         </div>
         <div class="col-md">
-            {{ render_field(form.priceperroll) }}
+            {{ render_field_sm(form.priceperroll) }}
         </div>
         <div class="col-md">
-            {{ render_field(form.purchasedate) }}
+            {{ render_field_sm(form.purchasedate) }}
         </div>
         <div class="col-md">
-            {{ render_field(form.url) }}
+            {{ render_field_sm(form.url) }}
+        </div>
+        <div class="col-md">
+            {{ render_field_sm(form.fil_status) }}
         </div>
         <div class="row"></div>
         <div class="col-md-1">

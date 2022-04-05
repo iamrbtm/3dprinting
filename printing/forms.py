@@ -42,6 +42,11 @@ class User_form(FlaskForm):
 class Filament_form(FlaskForm):
     vendor = lambda: [(c.id, c.name) for c in Vendors.query.all()]
     types = lambda: [(c.id, c.type) for c in Type.query.all()]
+    filstatus = lambda: [
+        (c.id, c.status)
+        for c in Status.query.filter(Status.whatfor == "Filaments").all()
+    ]
+
     name = StringField("Name (Internal Use only)", [InputRequired()])
     color = StringField("Color", [InputRequired()])
     priceperroll = FloatField(
@@ -62,6 +67,7 @@ class Filament_form(FlaskForm):
     vendorfk = SelectField("Vendor", [], choices=vendor)
     typefk = SelectField("Type", [], choices=types)
     referer = HiddenField()
+    fil_status = SelectField("Status", {}, choices=filstatus)
     submit = SubmitField("Submit")
 
 
@@ -163,7 +169,10 @@ class Vendor_form(FlaskForm):
 
 
 class Machine_form(FlaskForm):
-    macstatus = lambda: [(c.id, c.status) for c in Status.query.filter(Status.whatfor == "Machines").all()]
+    macstatus = lambda: [
+        (c.id, c.status)
+        for c in Status.query.filter(Status.whatfor == "Machines").all()
+    ]
     name = StringField("Name", [])
     purchase_price = StringField("Purchase Price", [])
     purchase_date = StringField("Purchase Date", [])
@@ -173,12 +182,15 @@ class Machine_form(FlaskForm):
     picture = FileField("Machine Picture", [])
     referer = HiddenField()
     submit = SubmitField("Submit")
-    machine_status = SelectField("Status",[],choices=macstatus)
+    machine_status = SelectField("Status", [], choices=macstatus)
 
 
 class customer_form(FlaskForm):
     states = lambda: [(c.abr, c.state) for c in States.query.all()]
-    status = lambda: [(c.id, c.status) for c in Status.query.filter(Status.whatfor == "Customers").all()]
+    status = lambda: [
+        (c.id, c.status)
+        for c in Status.query.filter(Status.whatfor == "Customers").all()
+    ]
     fname = StringField("First Name", [InputRequired()])
     lname = StringField("Last Name", [InputRequired()])
     company = StringField("Company")
@@ -195,6 +207,15 @@ class customer_form(FlaskForm):
 class Status_Form(FlaskForm):
     colors = lambda: [(c.hexcolor, c.color) for c in Colors.query.all()]
     status = StringField("Status Name")
-    description = StringField(u'Description', widget=TextArea())
+    description = StringField("Description", widget=TextArea())
     color = SelectField("Color", [], choices=colors)
-    whatfor = SelectField("Where",[],choices=[('Orders / Projects','Orders / Projects'),('Customers','Customers'),('Filaments','Filaments'),('Machines','Machines')])
+    whatfor = SelectField(
+        "Where",
+        [],
+        choices=[
+            ("Orders / Projects", "Orders / Projects"),
+            ("Customers", "Customers"),
+            ("Filaments", "Filaments"),
+            ("Machines", "Machines"),
+        ],
+    )

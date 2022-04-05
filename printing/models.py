@@ -93,10 +93,13 @@ class Filament(db.Model):
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
     )
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    #Forign Key
     vendorfk = db.Column(db.Integer, db.ForeignKey("vendors.id"))
     typefk = db.Column(db.Integer, db.ForeignKey("type.id"))
+    fil_status = db.Column(db.Integer, db.ForeignKey("status.id"))
     # Relationships
     type_rel = db.relationship("Type", backref="filament", lazy=True)
+    status_rel = db.relationship("Status", backref="filament", lazy=True)
 
     def dropdown_display(self):
         return self.name + " (" + self.type_rel.type + ")"
@@ -142,6 +145,7 @@ class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(150))
     lname = db.Column(db.String(150))
+    company = db.Column(db.String(150))
     address = db.Column(db.String(150))
     address2 = db.Column(db.String(150))
     city = db.Column(db.String(150))
