@@ -62,6 +62,7 @@ def create_app():
     from printing.templates.machine.machine import bp_machine
     from printing.templates.customer.customer import bp_customer
     from printing.templates.orders.orders import bp_order
+    from printing.templates.status.status import bp_status
 
     app.register_blueprint(base, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
@@ -71,6 +72,7 @@ def create_app():
     app.register_blueprint(bp_machine, url_prefix="/machine")
     app.register_blueprint(bp_customer, url_prefix="/customer")
     app.register_blueprint(bp_order, url_prefix="/order")
+    app.register_blueprint(bp_status, url_prefix="/status")
 
 
     from printing.models import User

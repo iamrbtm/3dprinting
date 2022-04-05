@@ -21,7 +21,7 @@ from printing.models import *
 class Order_Form(FlaskForm):
     list_machine = lambda: [(m.id, m.name) for m in Machine.query.all()]
     list_filament = lambda: [(f.id, f.dropdown_display()) for f in Filament.query.all()]
-    list_customer = lambda: [(c.id, c.fullname()) for c in Customer.query.all()]
+    list_customer = lambda: [(c.id, c.fullname()) for c in Customer.query.filter(Customer.customer_status == 1).all()]
 
     machinefk = SelectField("Machine", [], choices=list_machine)
     filamentfk = SelectField("Filament", [], choices=list_filament)

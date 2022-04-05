@@ -22,6 +22,8 @@ bp_order = Blueprint("order", __name__)
 
 @bp_order.route('/', methods=['GET', 'POST'])
 def order_home():
+    from printing.templates.orders.process_orders import get_raw_data
+    get_raw_data()
     form = Order_Form()
     
     if form.validate_on_submit():

@@ -1,5 +1,5 @@
 {% extends "customer/customer_submenu.html" %}
-{% from "_utilities.html" import render_field, render_select %}
+{% from "_utilities.html" import render_field, render_select, render_field_sm %}
 
 
 <!-- Title of the page (what goes on the tab when rendered) -->
@@ -18,99 +18,126 @@
 <!-- Any Action items go here -->
 {% block action_items %}
 <!--class="dropdown-item"-->
-<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_cust_Modal">Add New Customer</a>
 {% endblock action_items %}
 
 <!-- Main Content -->
 {% block content %}
 <br>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for cust in customers %}
-        <tr onclick="window.location='{{ url_for("customer.customer_edit", id=cust.id) }}';">
-            <td>{{cust.fname}} {{cust.lname}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<!-- Modal -->
-<div class="modal fade" id="new_cust_Modal" tabindex="-1" aria-labelledby="new_cust_ModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="new_cust_ModalLabel">Add New Customer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method=POST enctype=multipart/form-data action="{{url_for('customer.customer_main')}}">
-                    {{ form.csrf_token }}
-                    <fieldset class="form-field row">
-                        <div class="col-md-6">
-                            {{ render_field(form.fname) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ render_field(form.lname) }}
-                        </div>
-                        <div class="row"></div>
-                        <div class="col-md-12">
-                            {{ render_field(form.address) }}
-                            {{ render_field(form.address2) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ render_select(form.city) }}
-                        </div>
-                        <div class="col-md-2">
-                            {{ render_select(form.state) }}
-                        </div>
-                        <div class="col-md-4">
-                            {{ render_select(form.zipcode) }}
-                        </div>
-                        <div class="row"></div>
-                        <div class="col-md-6">
-                            {{ render_select(form.phone) }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ render_field(form.email) }}
-                        </div>
-                    </fieldset>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input class="btn btn-primary" type="submit" value="Add Customer">
-                </form>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <form method=POST enctype=multipart/form-data action="{{url_for('customer.customer_main')}}">
+                {{ form.csrf_token }}
+                <fieldset class="form-field row">
+                    <div class="col-md-6">
+                        {{ render_field_sm(form.fname) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ render_field_sm(form.lname) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-12">
+                        {{ render_field_sm(form.address) }}
+                        {{ render_field_sm(form.address2) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ render_field_sm(form.city) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ render_field_sm(form.state) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ render_field_sm(form.zipcode) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-6">
+                        {{ render_field_sm(form.phone) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ render_field_sm(form.email) }}
+                    </div>
+                    <div class="col-md-12">
+                        {{ render_field_sm(form.customer_status) }}
+                    </div>
+                    <div class="col-md-12 d-grid gap-2 d-md-flex justify-content-md-end">
+                        <input class="btn btn-primary col-4" type="submit" value="Add Customer">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <h3>Active Customers</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Last Order</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cust in customers %}
+                    {% if cust.customer_status == 1 %}
+                    <tr onclick="window.location='{{ url_for("customer.customer_edit", id=cust.id) }}';">
+                        <td style="background-color:{{cust.status_rel.color}} ; width:5px;"></td>
+                        <td>{{cust.fullname()}}</td>
+                        <td>{{cust.email}}</td>
+                        <td>{{cust.phone}}</td>
+                        <!-- FIXME: get last project name in the below cell -->
+                        <td>{{cust.orders_rel.project_name}}</td> 
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-2">
+            <h3>Customers</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cust in customers %}
+                    {% if cust.customer_status != 1 %}
+                    <tr onclick="window.location='{{ url_for("customer.customer_edit", id=cust.id) }}';">
+                        <td style="background-color:{{cust.status_rel.color}} ; width:5px;"></td>
+                        <td>{{cust.fname}} {{cust.lname}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
-<!-- Scripts needed for this page -->
-{% block scripts %}
+    <!-- Scripts needed for this page -->
+    {% block scripts %}
 
-<script>
-    var formErrors = {
-        %
-        if form.errors %
-    }
-    true {
-        %
-        else %
-    }
-    false {
-        %
-        endif %
-    };
-
-    $(document).ready(function () {
-        if (formErrors) {
-            $('.modal').modal('show');
+    <script>
+        var formErrors = {
+            %
+            if form.errors %
         }
-    });
-</script>
-{% endblock %}
+        true {
+            %
+            else %
+        }
+        false {
+            %
+            endif %
+        };
+
+        $(document).ready(function () {
+            if (formErrors) {
+                $('.modal').modal('show');
+            }
+        });
+    </script>
+    {% endblock %}

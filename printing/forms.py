@@ -12,6 +12,7 @@ from wtforms import (
     FileField,
     HiddenField,
 )
+from wtforms.widgets import TextArea
 from wtforms.validators import InputRequired, Email, URL, NumberRange
 from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms_sqlalchemy.orm import model_form
@@ -162,6 +163,7 @@ class Vendor_form(FlaskForm):
 
 
 class Machine_form(FlaskForm):
+    macstatus = lambda: [(c.id, c.status) for c in Status.query.filter(Status.whatfor == "Machines").all()]
     name = StringField("Name", [])
     purchase_price = StringField("Purchase Price", [])
     purchase_date = StringField("Purchase Date", [])
@@ -171,10 +173,12 @@ class Machine_form(FlaskForm):
     picture = FileField("Machine Picture", [])
     referer = HiddenField()
     submit = SubmitField("Submit")
+    machine_status = SelectField("Status",[],choices=macstatus)
 
 
 class customer_form(FlaskForm):
     states = lambda: [(c.abr, c.state) for c in States.query.all()]
+    status = lambda: [(c.id, c.status) for c in Status.query.filter(Status.whatfor == "Customers").all()]
     fname = StringField("First Name", [InputRequired()])
     lname = StringField("Last Name", [InputRequired()])
     company = StringField("Company")
@@ -182,7 +186,15 @@ class customer_form(FlaskForm):
     address2 = StringField("Address2", [])
     city = StringField("City", [])
     state = SelectField("State", [], choices=states)
-    zipcode = StringField("Zip Code", [])
+    zipcode = StringField("Zip", [])
     phone = StringField("Phone", [])
-    email = StringField("Email Address", [InputRequired(), Email()])
+    email = StringField("Email", [InputRequired(), Email()])
+    customer_status = SelectField("Status", [], choices=status)
 
+
+class Status_Form(FlaskForm):
+    colors = lambda: [(c.hexcolor, c.color) for c in Colors.query.all()]
+    status = StringField("Status Name")
+    description = StringField(u'Description', widget=TextArea())
+    color = SelectField("Color", [], choices=colors)
+    whatfor = SelectField("Where",[],choices=[('Orders / Projects','Orders / Projects'),('Customers','Customers'),('Filaments','Filaments'),('Machines','Machines')])

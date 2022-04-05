@@ -36,3 +36,15 @@
 {% endfor %}
 </ul>
 {% endmacro %}
+
+{% macro render_field_sm(field) %}
+<div class="form-floating">
+    {{ field(class="form-control", **kwargs)|safe }}
+    {{ field.label }}
+</div>
+<ul>
+{% for error in field.errors %}
+    <li style="color:red;">{{ error }}</li>
+{% endfor %}
+</ul>
+{% endmacro %}

@@ -1,5 +1,5 @@
 {% extends "machine/machine_submenu.html" %}
-{% from "_utilities.html" import render_field, render_select, render_submit %}
+{% from "_utilities.html" import render_field, render_select, render_submit, render_field_sm %}
 
 {% block action_items %}
 <!--class="dropdown-item"-->
@@ -18,26 +18,29 @@
             <form method=POST enctype=multipart/form-data action="{{url_for('machine.machine_edit', id=machine.id)}}">
                 {{ form.csrf_token }}
                 <fieldset class="form-field row">
-                    <div class="col-md-8">
-                        {{ render_field(form.name) }}
+                    <div class="col-md-6">
+                        {{ render_field_sm(form.name) }}
                     </div>
-                    <div class="col-md-4">
-                        {{ render_field(form.picture) }}
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.picture) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.machine_status) }}
                     </div>
                     <div class="col-md-6">
-                        {{ render_field(form.purchase_date) }}
+                        {{ render_field_sm(form.purchase_date) }}
                     </div>
                     <div class="col-md-6">
-                        {{ render_field(form.purchase_price) }}
+                        {{ render_field_sm(form.purchase_price) }}
                     </div>
                     <div class="col-md-4">
-                        {{ render_field(form.make) }}
+                        {{ render_field_sm(form.make) }}
                     </div>
                     <div class="col-md-4">
-                        {{ render_field(form.model) }}
+                        {{ render_field_sm(form.model) }}
                     </div>
                     <div class="col-md-4">
-                        {{ render_field(form.serial_number) }}
+                        {{ render_field_sm(form.serial_number) }}
                     </div>
                     <div class="row"></div>
                     <h5>URLS</h5>

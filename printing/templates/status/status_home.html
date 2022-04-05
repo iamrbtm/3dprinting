@@ -1,0 +1,183 @@
+{% extends "status/status_submenu.html" %}
+{% from "_utilities.html" import render_field, render_select %}
+
+
+<!-- Title of the page (what goes on the tab when rendered) -->
+{% block title %}
+{% endblock %}
+
+<!-- Specific Style to this page -->
+{% block style %}
+{% endblock %}
+
+<!-- Any Page Menu Item go here -->
+{% block extra_menu_items %}
+<!--class="nav-link"-->
+{% endblock extra_menu_items %}
+
+<!-- Any Action items go here -->
+{% block action_items %}
+<!--class="dropdown-item"-->
+<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_status_Modal">Add New Status</a>
+{% endblock action_items %}
+
+<!-- Main Content -->
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <h3>Customers</h3>
+            <table class="table table-bstatused table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th></th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats in stats %}
+                    {% if stats.whatfor == 'Customers' %}
+                    <tr onclick="window.location='{{ url_for("status.status_edit", id=stats.id) }}';">
+                        <td style="background-color: {{stats.color}}; width:5px;"></td>
+                        <td>{{stats.status}}</td>
+                        <td>{{stats.description}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-3">
+            <h3>Orders/Projects</h3>
+            <table class="table table-bstatused table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th></th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats in stats %}
+                    {% if stats.whatfor == 'Orders / Projects' %}
+                    <tr onclick="window.location='{{ url_for("status.status_edit", id=stats.id) }}';">
+                        <td style="background-color: {{stats.color}}; width:5px;"></td>
+                        <td>{{stats.status}}</td>
+                        <td>{{stats.description}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-3">
+            <h3>Filaments</h3>
+            <table class="table table-bstatused table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th></th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats in stats %}
+                    {% if stats.whatfor == 'Filaments' %}
+                    <tr onclick="window.location='{{ url_for("status.status_edit", id=stats.id) }}';">
+                        <td style="background-color: {{stats.color}}; width:5px;"></td>
+                        <td>{{stats.status}}</td>
+                        <td>{{stats.description}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-3">
+            <h3>Machines</h3>
+            <table class="table table-bstatused table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th></th>
+                        <th>Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats in stats %}
+                    {% if stats.whatfor == 'Machines' %}
+                    <tr onclick="window.location='{{ url_for("status.status_edit", id=stats.id) }}';">
+                        <td style="background-color: {{stats.color}}; width:5px;"></td>
+                        <td>{{stats.status}}</td>
+                        <td>{{stats.description}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            <!-- Modal -->
+            <div class="modal fade" id="new_status_Modal" tabindex="-1" aria-labelledby="new_status_ModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="new_status_ModalLabel">Add New Status</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method=POST enctype=multipart/form-data action="{{url_for('status.status_home')}}">
+                                {{ form.csrf_token }}
+                                <fieldset class="form-field row">
+                                    <div class="col-md-12">
+                                        {{ render_field(form.status) }}
+                                    </div>
+                                    <div class="row"></div>
+                                    <div class="col-md-6">
+                                        {{ render_field(form.color) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ render_field(form.whatfor) }}
+                                    </div>
+                                    <div class="row"></div>
+                                    <div class="col-md-12">
+                                        {{ render_field(form.description) }}
+                                    </div>
+                                </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input class="btn btn-primary" type="submit" value="Add status">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+
+            <!-- Scripts needed for this page -->
+            {% block scripts %}
+
+            <script>
+                var formErrors = {
+                    %
+                    if form.errors %
+                }
+                true {
+                    %
+                    else %
+                }
+                false {
+                    %
+                    endif %
+                };
+
+                $(document).ready(function () {
+                    if (formErrors) {
+                        $('.modal').modal('show');
+                    }
+                });
+            </script>
+            {% endblock %}

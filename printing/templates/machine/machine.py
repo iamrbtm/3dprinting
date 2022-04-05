@@ -67,6 +67,7 @@ def machine_edit(id):
         db_mac.make = form.make.data
         db_mac.model = form.model.data
         db_mac.serial_number = form.serial_number.data
+        db_mac.machine_status = form.machine_status.data
         db_mac.userid = current_user.id
         db.session.commit()
         return redirect(form.referer.data)

@@ -97,10 +97,10 @@ class Filament(db.Model):
     typefk = db.Column(db.Integer, db.ForeignKey("type.id"))
     # Relationships
     type_rel = db.relationship("Type", backref="filament", lazy=True)
-    orders_rel = db.relationship("Orders", backref="filament", lazy=True)
 
     def dropdown_display(self):
-        return self.name +" ("+self.type_rel.type+")"
+        return self.name + " (" + self.type_rel.type + ")"
+
 
 class Machine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -117,9 +117,11 @@ class Machine(db.Model):
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
     )
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    # Forign Key
+    machine_status = db.Column(db.Integer, db.ForeignKey("status.id"))
     # Relationships
     infourl_rel = db.relationship("Info_url", backref="machine", lazy=True)
-    orders_rel = db.relationship("Orders", backref="machine", lazy=True)
+    status_rel = db.relationship("Status", backref="machine", lazy=True)
 
 
 class Info_url(db.Model):
@@ -148,14 +150,40 @@ class Customer(db.Model):
     phone = db.Column(db.String(20))
     email = db.Column(db.String(150), unique=True)
     userid = db.Column(db.Integer)
+    #Forign Keys
+    customer_status = db.Column(db.Integer, db.ForeignKey("status.id"))
     # Relationship
     orders_rel = db.relationship("Orders", backref="customer", lazy=True)
+    status_rel = db.relationship("Status", backref="customer", lazy=True)
 
+    
     def fullname(self):
         return self.fname + " " + self.lname
 
+
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date_needed = db.Column(db.Date)
+    project_name = db.Column(db.String(100), unique=True)
+    userid = db.Column(db.Integer)
+    update_time = db.Column(
+        db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
+    )
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    # Forign Key
+    customerfk = db.Column(db.Integer, db.ForeignKey("customer.id"))
+    order_status = db.Column(db.Integer, db.ForeignKey("status.id"))
+    # Relationship
+    orderitems = db.relationship("Order_lineitems", backref="orders", lazy=True)
+
+
+class Order_lineitems(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    qty = db.Column(db.Integer)
+    weight_in_g = db.Column(db.String(10))
+    time_to_print = db.Column(db.String(50))
+    setuptime = db.Column(db.Integer)
+    taredowntime = db.Column(db.Integer)
     userid = db.Column(db.Integer)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
@@ -163,8 +191,28 @@ class Orders(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     # Forign Key
     machinefk = db.Column(db.Integer, db.ForeignKey("machine.id"))
-    customerfk = db.Column(db.Integer, db.ForeignKey("customer.id"))
     filamentfk = db.Column(db.Integer, db.ForeignKey("filament.id"))
+    project_status = db.Column(db.Integer, db.ForeignKey("status.id"))
+    orderfk = db.Column(db.Integer, db.ForeignKey("orders.id"))
+
+
+class Status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(50))
+    description = db.Column(db.Text)
+    color = db.Column(db.String(10))
+    whatfor = db.Column(db.String(50))
+    userid = db.Column(db.Integer)
+    update_time = db.Column(
+        db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
+    )
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+
+
+class Colors(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    color = db.Column(db.String(10))
+    hexcolor = db.Column(db.String(10))
 
 
 # class <name>(db.Model):

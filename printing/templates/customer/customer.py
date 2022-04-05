@@ -54,6 +54,7 @@ def customer_edit(id):
         db_cust.phone = form.phone.data
         db_cust.email = form.email.data
         db_cust.userid = current_user.id
+        db_cust.customer_status = form.customer_status.data
         db.session.commit()
         return redirect(url_for('customer.customer_main'))   
      
