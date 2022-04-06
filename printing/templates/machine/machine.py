@@ -17,6 +17,7 @@ from printing import db, photos
 from printing.forms import *
 from printing.utilities import *
 import datetime
+from printing.templates.machine.machine_process import *
 
 
 bp_machine = Blueprint("machine", __name__)
@@ -36,6 +37,7 @@ def machine_main():
             photonames = resize_images(filename, form.name.data)
             newmachine.picture = photonames['large']
             newmachine.mach_icon = photonames['thumb']
+        newmachine.c_roi_per_min = calculate_roi_per_min(form.name.data, 3, 60)
         db.session.add(newmachine)
         db.session.commit()
         return redirect(url_for("machine.machine_main"))
@@ -69,6 +71,7 @@ def machine_edit(id):
         db_mac.serial_number = form.serial_number.data
         db_mac.machine_status = form.machine_status.data
         db_mac.userid = current_user.id
+        db_mac.c_roi_per_min = calculate_roi_per_min(form.name.data, 3, 60)
         db.session.commit()
         return redirect(form.referer.data)
     

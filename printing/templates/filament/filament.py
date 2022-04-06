@@ -16,6 +16,7 @@ from printing.templates.base.base_process import *
 from printing import db, photos
 from printing.forms import *
 from printing.utilities import *
+from printing.templates.filament.filament_process import *
 import datetime, os
 
 bp_filament = Blueprint("filament", __name__)

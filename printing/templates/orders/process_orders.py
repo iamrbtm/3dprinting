@@ -1,23 +1,25 @@
 from printing import db
+from printing.models import *
 
 
-def get_raw_data():
+def get_raw_data(filament, file):
     # return filament used, time to print
-    with open("Humulin u500.gcode", "r") as file:
-        i = 0
-        for line in file:
-            if "used" in line:
-                filused = line.replace(";Filament used: ", "")
-            elif "TIME" in line:
-                time = line.replace(";TIME:", "")
-            i += 1
-            if i >= 20:
-                break
-        print(filused, time)
+    fileread = file
+    
+    i = 0
+    for line in fileread:
+        if "used" in line:
+            filused = line.replace(";Filament used: ", "")
+        elif "TIME" in line:
+            time = line.replace(";TIME:", "")
+        i += 1
+        if i >= 20:
+            break
+    print(filused, time)
 
     formattedtime = calculate_print_time(time)
-    formattedweight = calculate_weight(filused)
-    return [formattedtime, formattedweight]
+    formattedweight = calculate_weight(filused, filament)
+    return [formattedtime, formattedweight, filused]
 
 
 def calculate_print_time(timeinsec):
@@ -48,11 +50,11 @@ def calculate_print_time(timeinsec):
     return result
 
 
-def calculate_weight(weightinm):
+def calculate_weight(weightinm, filament):
     import math
 
-    diameter = 1.75
-    density = 1.24
+    diameter = db.session.query(Filament.diameter).filter(Filament.id == filament).scalar()
+    density = db.session.query(Filament).filter(Filament.id==filament).first().type_rel.densitygcm3
     # Volume = (length in m * 100) * pi() * ((diam/2)^2)
     filused = float(weightinm.strip("\n").replace("m", ""))
     filcm = filused * 100
@@ -62,3 +64,34 @@ def calculate_weight(weightinm):
     weight = volume * density
     weight = f"{round(weight)}g"
     return weight
+
+def calculate_cost(order):
+    from string import digits
+    #MATERIALS COSTING
+    fil = db.session.query(Filament).filter(Filament.id == order.filamentfk).first()
+    if  fil.diameter == 1.75:
+        costPerMOfFil = fil.priceperroll / db.session.query(Filament).filter(Filament.id==order.filamentfk).first().type_rel.m_in_1kg_175
+    else:
+        costPerMOfFil = fil.priceperroll / db.session.query(Filament).filter(Filament.id==order.filamentfk).first().type_rel.m_in_1kg_3
+    
+    length_fil = get_raw_data(order.filamentfk)
+    l_in_m = float(length_fil[2].strip().replace('m',''))
+    c_materials = costPerMOfFil * l_in_m
+
+    #MARKUP ON MATERIALS COSTING
+    custmarkup = db.session.query(Customer.markuppercent).filter(Customer.id == order.customerfk).scalar()
+    c_materials_markup = custmarkup * c_materials
+    
+    #LABOR COSTING
+    totaltime = order.setuptime + order.taredowntime
+    pricePerMin = db.session.query(Setup).first().pricePerHour / 60
+    c_labor = pricePerMin * totaltime
+    
+    #MACHINE COSTING
+    
+    c_machine = 0
+    
+    #SUB TOTAL
+    c_subtotal = c_materials + c_materials_markup + c_labor + c_machine
+   
+    return {'materials':c_materials, 'markup':c_materials_markup, 'labor':c_labor, 'machine':c_machine, 'subtotal':c_subtotal}

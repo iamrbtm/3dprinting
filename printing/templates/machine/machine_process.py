@@ -1,6 +1,7 @@
 from PIL import Image
 from flask import url_for
 from printing import photos, db
+from printing.models import *
 import os
 
 def resize_images(fn, name):
@@ -23,4 +24,10 @@ def resize_images(fn, name):
         os.remove('printing/static/images/'+fn)
     return {'thumb':thumb, 'large':lg}
         
-    
+
+def calculate_roi_per_min(machine, years_for_roi, printing_hours_per_year):
+    mins = ((printing_hours_per_year * 60) * 52) * years_for_roi #Convert Years to min
+    cost = db.session.query(Machine.purchase_price).filter(Machine.name == machine).scalar() # get cost of machine
+    roipermin = cost / mins   #cost / mins = roi per min
+    return roipermin
+

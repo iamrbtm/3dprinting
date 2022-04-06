@@ -4,6 +4,7 @@ from wtforms import (
     StringField,
     DateField,
     DecimalField,
+    IntegerField,
     PasswordField,
     SelectField,
     SelectMultipleField,
@@ -30,3 +31,7 @@ class Order_Form(FlaskForm):
     order_status = SelectField('Status',[],choices=orderstatus)
     machinefk = SelectField("Machine", [], choices=list_machine)
     filamentfk = SelectField("Filament", [], choices=list_filament)
+    gcode = FileField("Gcode File", [])
+    qty = IntegerField("Quantity",[NumberRange(min=1, max=100, message="Must be a number from 1 to 100"),InputRequired()])
+    setuptime = StringField("Pre print setup time (in min)")
+    taredowntime = StringField("Post print setup time (in min)")

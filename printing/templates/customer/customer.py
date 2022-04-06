@@ -11,6 +11,7 @@ from sqlalchemy.sql.expression import func
 from flask_login import login_required, current_user
 import flask_login
 from sqlalchemy.orm import session
+from sqlalchemy import or_, and_
 from printing.models import *
 from printing.templates.base.base_process import *
 from printing import db, photos
@@ -29,6 +30,7 @@ def customer_main():
         cust = Customer()
         form.populate_obj(cust)
         cust.userid = current_user.id
+        cust.phone = format_tel(form.phone.data)
         db.session.add(cust)
         db.session.commit()
         return redirect(url_for("customer.customer_main"))
@@ -52,7 +54,7 @@ def customer_detail(id):
         db_cust.city = form.city.data
         db_cust.state = form.state.data
         db_cust.zipcode = form.zipcode.data
-        db_cust.phone = form.phone.data
+        db_cust.phone = format_tel(form.phone.data)
         db_cust.email = form.email.data
         db_cust.userid = current_user.id
         db_cust.customer_status = form.customer_status.data
@@ -63,12 +65,12 @@ def customer_detail(id):
 
     currentorders = (
         Orders.query.filter(Orders.customerfk == id)
-        .filter(Orders.order_status != 8)
+        .filter(and_(Orders.order_status != 8, Orders.order_status != 18))
         .count()
     )
     pastorders = (
         Orders.query.filter(Orders.customerfk == id)
-        .filter(Orders.order_status == 8)
+        .filter(or_(Orders.order_status == 8, Orders.order_status == 18))
         .count()
     )
 

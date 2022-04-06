@@ -68,7 +68,7 @@
                         <td></td>
                         {% endif %}
                         <td>{{item.name}}</td>
-                        <td>{% if item.diameter == 1 %}1.75mm{% else %}3mm{% endif %}</td>
+                        <td>{{item.diameter}}mm</td>
                         <td>
                             {% if item.length_spool == 1 %}200g
                             {% elif item.length_spool == 2 %}1KG

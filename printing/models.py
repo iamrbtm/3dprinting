@@ -84,7 +84,7 @@ class Filament(db.Model):
     colorhex = db.Column(db.String(20))
     priceperroll = db.Column(db.Float)
     length_spool = db.Column(db.Integer)
-    diameter = db.Column(db.Integer)
+    diameter = db.Column(db.Float)
     url = db.Column(db.String(200))
     purchasedate = db.Column(db.Date)
     picture = db.Column(db.String(100))
@@ -115,6 +115,7 @@ class Machine(db.Model):
     serial_number = db.Column(db.String(50), unique=True)
     picture = db.Column(db.String(100))
     mach_icon = db.Column(db.String(100))
+    c_roi_per_min = db.Column(db.Float)
     userid = db.Column(db.Integer)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
@@ -153,6 +154,7 @@ class Customer(db.Model):
     zipcode = db.Column(db.String(20))
     phone = db.Column(db.String(20))
     email = db.Column(db.String(150), unique=True)
+    markuppercent = db.Column(db.Float)
     userid = db.Column(db.Integer)
     #Forign Keys
     customer_status = db.Column(db.Integer, db.ForeignKey("status.id"))
@@ -174,6 +176,13 @@ class Orders(db.Model):
     time_to_print = db.Column(db.String(50))
     setuptime = db.Column(db.Integer)
     taredowntime = db.Column(db.Integer)
+    c_labor = db.Column(db.Float)
+    c_machine = db.Column(db.Float)
+    c_materials = db.Column(db.Float)
+    c_markup = db.Column(db.Float)
+    shipping = db.Column(db.Float)
+    c_subtotal = db.Column(db.Float)
+    c_total = db.Column(db.Float)
     userid = db.Column(db.Integer)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
@@ -207,6 +216,14 @@ class Colors(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.String(10))
     hexcolor = db.Column(db.String(10))
+
+class Setup(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    pricePerHour = db.Column(db.Float)
+    userid = db.Column(db.Integer)
+    update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+
 
 
 # class <name>(db.Model):

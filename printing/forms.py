@@ -53,7 +53,7 @@ class Filament_form(FlaskForm):
         "Cost of Roll", [NumberRange(min=0.01, max=9999, message="Enter numbers only")]
     )
     diameter = SelectField(
-        "Filament Diameter", [], coerce=int, choices=[(1, "1.75mm"), (2, "3mm")]
+        "Filament Diameter", [], choices=[(1.75, "1.75mm"), (3, "3mm")]
     )
     length_spool = SelectField(
         "Length of Spool",
