@@ -1,21 +1,21 @@
-from printing import db
+from printing import db, uploads
 from printing.models import *
 
 
 def get_raw_data(filament, file):
     # return filament used, time to print
-    fileread = file
-    
-    i = 0
-    for line in fileread:
-        if "used" in line:
-            filused = line.replace(";Filament used: ", "")
-        elif "TIME" in line:
-            time = line.replace(";TIME:", "")
-        i += 1
-        if i >= 20:
-            break
-    print(filused, time)
+    ulfile = uploads.save(file)
+    with open ('printing/static/uploads/'+ulfile, 'r') as file:
+        i = 0
+        for line in file:
+            if "used" in line:
+                filused = line.replace(";Filament used: ", "")
+            elif "TIME" in line:
+                time = line.replace(";TIME:", "")
+            i += 1
+            if i >= 20:
+                break
+        print(filused, time)
 
     formattedtime = calculate_print_time(time)
     formattedweight = calculate_weight(filused, filament)
@@ -65,7 +65,7 @@ def calculate_weight(weightinm, filament):
     weight = f"{round(weight)}g"
     return weight
 
-def calculate_cost(order):
+def calculate_cost(order, filused):
     from string import digits
     #MATERIALS COSTING
     fil = db.session.query(Filament).filter(Filament.id == order.filamentfk).first()
@@ -74,8 +74,7 @@ def calculate_cost(order):
     else:
         costPerMOfFil = fil.priceperroll / db.session.query(Filament).filter(Filament.id==order.filamentfk).first().type_rel.m_in_1kg_3
     
-    length_fil = get_raw_data(order.filamentfk)
-    l_in_m = float(length_fil[2].strip().replace('m',''))
+    l_in_m = float(filused.strip().replace('m',''))
     c_materials = costPerMOfFil * l_in_m
 
     #MARKUP ON MATERIALS COSTING

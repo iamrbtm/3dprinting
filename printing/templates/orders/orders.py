@@ -36,7 +36,7 @@ def order_home():
         neworder.userid = current_user.id
         db.session.add(neworder)
         db.session.commit()
-        cost = calculate_cost(neworder)
+        cost = calculate_cost(neworder, filused)
         neworder.c_materials = cost['materials']
         neworder.c_markup = cost['markup']
         neworder.c_labor = cost['labor']
