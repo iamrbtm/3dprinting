@@ -72,6 +72,8 @@ def update(id, orderstatus):
     
     
     
-# [w]]: DETAILS page
+# [x]: DETAILS page
 # [x]: incorperate uploading a file with putting parsed info in the system
-# [x]]: link to order when clicked on cuatomer page
+# [x]: link to order when clicked on cuatomer page
+# [ ]: put orders on the main menu
+# [ ]: fix to where the order details come up when clicking on the customer page.
