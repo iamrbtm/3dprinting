@@ -165,6 +165,9 @@ class Customer(db.Model):
     
     def fullname(self):
         return self.fname + " " + self.lname
+    
+    def csz(self):
+        return self.city +", "+self.state +" "+self.zipcode
 
 
 class Orders(db.Model):
@@ -176,13 +179,12 @@ class Orders(db.Model):
     time_to_print = db.Column(db.String(50))
     setuptime = db.Column(db.Integer)
     taredowntime = db.Column(db.Integer)
+    time = db.Column(db.Integer)
     c_labor = db.Column(db.Float)
     c_machine = db.Column(db.Float)
     c_materials = db.Column(db.Float)
     c_markup = db.Column(db.Float)
     shipping = db.Column(db.Float)
-    c_subtotal = db.Column(db.Float)
-    c_total = db.Column(db.Float)
     userid = db.Column(db.Integer)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
@@ -197,8 +199,15 @@ class Orders(db.Model):
     machine_rel = db.relationship("Machine", backref="orders", lazy=True)
     filament_rel = db.relationship("Filament", backref="orders", lazy=True)
     status_rel = db.relationship("Status", backref="orders", lazy=True)
+    customer_rel = db.relationship("Customer", backref="orders", lazy=True)
 
-
+    def subtotal(self):
+        return self.c_labor+self.c_machine+self.c_markup+self.c_materials
+    
+    def total(self):
+        return "${:,.2f}".format((self.subtotal() + self.shipping)* self.qty) 
+        
+        
 class Status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(50))

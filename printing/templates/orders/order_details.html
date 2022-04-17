@@ -1,83 +1,511 @@
 {% extends "orders/orders_submenu.html" %}
-{% from "_utilities.html" import render_field_sm, render_select %}
-
+{% from "_utilities.html" import small_field %}
 
 <!-- Title of the page (what goes on the tab when rendered) -->
 {% block title %}
 {% endblock %}
 
-<!-- Specific Style to this page -->
-{% block style %}
-{% endblock %}
-
 <!-- Any Page Menu Item go here -->
 {% block extra_menu_items %}
-<!--class="nav-link"-->
+<!--style="line-height: 0px;" class
+="nav-link"-->
 {% endblock extra_menu_items %}
 
 <!-- Any Action items go here -->
 {% block action_items %}
-<!--class="dropdown-item"-->
-<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_order_Modal">Add New order</a>
+<!--style="line-height: 0px;" class
+="dropdown-item"-->
 {% endblock action_items %}
 
 <!-- Main Content -->
 {% block content %}
 <br>
+<div class=WordSection1>
 
+    <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+     mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+        <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:17.0pt'>
+            <td width=666 colspan=5 valign=top style='width:499.65pt;border:solid windowtext 1.0pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-size:16.0pt;font-family:"Verdana",sans-serif'><b>Project:</b>
+                        {{order.project_name}}</span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:1;height:17.0pt'>
+            <td width=318 colspan=2 valign=top style='width:238.6pt;border:none;
+      mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=326 colspan=2 valign=top style='width:244.45pt;border:none;
+      mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:2;height:17.0pt'>
+            <td width=318 colspan=2 valign=top style='width:238.6pt;border:none;
+      border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><b><span style='font-family:"Verdana",sans-serif'>Customer<o:p></o:p></span></b></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=326 colspan=2 valign=top style='width:244.45pt;border:none;
+      border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><b><span style='font-family:"Verdana",sans-serif'>Order
+                            Details<o:p></o:p></span></b></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:3;height:17.0pt'>
+            <td width=318 colspan=2 rowspan=4 valign=top style='width:238.6pt;border:
+      solid windowtext 1.0pt;border-top:none;mso-border-top-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p><b>{{order.customer_rel.fullname()}}</b><br>
+                        {{order.customer_rel.address}} <br>
+                    {{order.customer_rel.csz()}} <br>
+                {{order.customer_rel.phone}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Date
+                        Needed:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border:solid windowtext 1.0pt;
+      border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+      solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{order.date_needed}}</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:4;height:17.0pt'>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Order
+                        Status:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{small_field(form.order_status)}}</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:5;height:17.0pt'>
+            <td width=22 valign=top style='width:16.6pt;border:none;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><b><span style='font-family:"Verdana",sans-serif'>
+                            <o:p>&nbsp;</o:p>
+                        </span></b></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Quantity:<b>
+                            <o:p></o:p>
+                        </b></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                            <o:p>{{order.qty}}</o:p>
+                        </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:6;height:17.0pt'>
+            <td width=22 valign=top style='width:16.6pt;border:none;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><b><span style='font-family:"Verdana",sans-serif'>
+                            <o:p>&nbsp;</o:p>
+                        </span></b></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Filament:<b>
+                            <o:p></o:p>
+                        </b></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                            <o:p>{{order.filament_rel.name}}</o:p>
+                        </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:7;height:17.0pt'>
+            <td width=318 colspan=2 valign=top style='width:238.6pt;border:none;
+      mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Machine:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{order.machine_rel.name}}</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:8;height:17.0pt'>
+            <td width=318 colspan=2 valign=top style='width:238.6pt;border:none;
+      border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><b><span style='font-family:"Verdana",sans-serif'>Pricing</span></b><span
+                        style='font-family:"Verdana",sans-serif'>
+                        <o:p></o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Weight(g):<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{order.weight_in_g}}</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:9;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Materials:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(order.c_materials)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Setup Time:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{order.setuptime}}m</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:10;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Labor:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(order.c_labor)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p></o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Takedown:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{order.taredowntime}}m</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:11;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Machine:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(order.c_machine)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Print Time:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{order.time_to_print}}</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:12;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Markup:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(order.c_markup)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=127 valign=top style='width:95.3pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Total Time:<o:p></o:p></span></p>
+            </td>
+            <td width=199 valign=top style='width:149.15pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{totaltime}}</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:13;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Subtotal:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(subtotal)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+            <td width=326 colspan=2 rowspan=5 valign=top style='width:244.45pt;
+      border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+      border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Notes:</span><b><span
+                            style='font-size:14.0pt;font-family:"Verdana",sans-serif'>
+                            <o:p></o:p>
+                        </span></b></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:14;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Shipping:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(order.shipping)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:15;height:17.0pt'>
+            <td width=94 valign=top style='width:70.7pt;border:solid windowtext 1.0pt;
+      border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+      padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>Total:<o:p></o:p></span></p>
+            </td>
+            <td width=224 valign=top style='width:167.9pt;border-top:none;border-left:
+      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+      mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>{{"${:,.2f}".format(total)}}</o:p>
+                    </span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:16;height:17.0pt'>
+            <td width=318 colspan=2 rowspan=2 valign=bottom style='width:238.6pt;
+      border:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-size:8.0pt;font-family:"Verdana",sans-serif'>Date
+                        ordered:<o:p>{{order.date_created.strftime('%m-%d-%Y  %I:%M %p')}}</o:p></span></p>
+            </td>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+        </tr>
+        <tr style='mso-yfti-irow:17;mso-yfti-lastrow:yes;height:17.0pt'>
+            <td width=22 valign=top style='width:16.6pt;border:none;border-right:solid windowtext 1.0pt;
+      mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+      height:17.0pt'>
+                <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+                        <o:p>&nbsp;</o:p>
+                    </span></p>
+            </td>
+        </tr>
+    </table>
 
-<form method=POST enctype=multipart/form-data action="{{url_for('order.order_home')}}">
-    {{ form.csrf_token }}
-    <fieldset class="form-field row">
-        <div class="col-md-4">
-            {{ render_field_sm(form.date_needed) }}
-        </div>
-        <div class="col-md-4">
-            {{ render_field_sm(form.project_name) }}
-        </div>
-        <div class="col-md-4">
-            {{ render_field_sm(form.order_status) }}
-        </div>
-        <div class="row"></div>
-        <div class="col-md-12">
-            {{ render_field_sm(form.customerfk) }}
-        </div>
-        <div class="row"></div>
-        <div class="col-md-6">
-            {{ render_field_sm(form.machinefk) }}
-        </div>
-        <div class="col-md-6">
-            {{ render_field_sm(form.filamentfk) }}
-        </div>
-        <div class="row"></div>
-        <div>
-            <input class="btn btn-primary" type="submit" value="Add order">
-        </div>
-    </fieldset>
-</form>
+    <p class=MsoNormal><span style='font-family:"Verdana",sans-serif'>
+            <o:p>&nbsp;</o:p>
+        </span></p>
+
+</div>
 {% endblock %}
 
 <!-- Scripts needed for this page -->
 {% block scripts %}
-
 <script>
-    var formErrors = {
-        %
-        if form.errors %
-    }
-    true {
-        %
-        else %
-    }
-    false {
-        %
-        endif %
-    };
+    let status = document.getElementById('order_status');
 
-    $(document).ready(function () {
-        if (formErrors) {
-            $('.modal').modal('show');
-        }
-    });
+    order_status.onchange = function() {
+        fetch('http://127.0.0.1:5000/order/update/' + {{order.id}} + "/" + status.value);
+    }
 </script>
 {% endblock %}
+

@@ -19,7 +19,7 @@ def get_raw_data(filament, file):
 
     formattedtime = calculate_print_time(time)
     formattedweight = calculate_weight(filused, filament)
-    return [formattedtime, formattedweight, filused]
+    return [formattedtime, formattedweight, filused, time]
 
 
 def calculate_print_time(timeinsec):
@@ -37,14 +37,11 @@ def calculate_print_time(timeinsec):
     seconds = timeinsec
 
     if day == 0 and hour == 0:
-        result = f"{minutes} minutes {seconds} seconds"
+        result = f"{minutes}m {seconds}s"
     elif day == 0 and hour > 0:
-        result = f"{hour} hours {minutes} minutes {seconds} seconds"
+        result = f"{hour}h {minutes}m {seconds}s"
     elif day > 0:
-        if day == 1:
-            result = f"{day} day {hour} hours {minutes} minutes {seconds} seconds"
-        else:
-            result = f"{day} days {hour} hours {minutes} minutes {seconds} seconds"
+        result = f"{day}d {hour}h {minutes}m {seconds}s"
     else:
         result = "failed"
     return result
@@ -87,10 +84,11 @@ def calculate_cost(order, filused):
     c_labor = pricePerMin * totaltime
     
     #MACHINE COSTING
-    
     c_machine = 0
-    
-    #SUB TOTAL
-    c_subtotal = c_materials + c_materials_markup + c_labor + c_machine
    
-    return {'materials':c_materials, 'markup':c_materials_markup, 'labor':c_labor, 'machine':c_machine, 'subtotal':c_subtotal}
+    return {'materials':c_materials, 'markup':c_materials_markup, 'labor':c_labor, 'machine':c_machine}
+
+def calc_total_time(labortime, time):
+    labortime = labortime * 60
+    labortime = labortime + time 
+    return calculate_print_time(labortime)

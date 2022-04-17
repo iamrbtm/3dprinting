@@ -31,6 +31,7 @@ def customer_main():
         form.populate_obj(cust)
         cust.userid = current_user.id
         cust.phone = format_tel(form.phone.data)
+        cust.markuppercent = .2
         db.session.add(cust)
         db.session.commit()
         return redirect(url_for("customer.customer_main"))

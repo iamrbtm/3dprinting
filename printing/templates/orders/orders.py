@@ -29,19 +29,21 @@ def order_home():
     if form.validate_on_submit():
         neworder = Orders()
         if form.gcode.data:
-            parsetime, parseweight, filused = get_raw_data(form.filamentfk.data, form.gcode.data)
+            parsetime, parseweight, filused, time = get_raw_data(
+                form.filamentfk.data, form.gcode.data
+            )
             neworder.time_to_print = parsetime
             neworder.weight_in_g = parseweight
+            neworder.time = time
         form.populate_obj(neworder)
         neworder.userid = current_user.id
         db.session.add(neworder)
         db.session.commit()
         cost = calculate_cost(neworder, filused)
-        neworder.c_materials = cost['materials']
-        neworder.c_markup = cost['markup']
-        neworder.c_labor = cost['labor']
-        neworder.c_machine = cost['machine']
-        neworder.c_subtotal = cost['subtotal']
+        neworder.c_materials = cost["materials"]
+        neworder.c_markup = cost["markup"]
+        neworder.c_labor = cost["labor"]
+        neworder.c_machine = cost["machine"]
         db.session.commit()
         return redirect(url_for("order.order_home"))
 
@@ -49,25 +51,27 @@ def order_home():
     return render_template("/orders/order_home.html", **context)
 
 
-@bp_order.route("/details", methods=["GET", "POST"])
-def order_details():
-    from printing.templates.orders.process_orders import get_raw_data
+@bp_order.route("/details/<id>", methods=["GET", "POST"])
+def order_details(id):
+    order_data = db.session.query(Orders).filter(Orders.id == id).first()
+    form = Order_Form(obj=order_data)
+    subtotal = order_data.c_materials + order_data.c_machine + order_data.c_labor + order_data.c_markup
+    total = order_data.shipping + subtotal
+    totaltime = calc_total_time((order_data.setuptime + order_data.taredowntime), order_data.time)
 
-    parsetime, parseweight = get_raw_data()
-    form = Order_Form()
+    context = {"user": User, "order": order_data, "subtotal": subtotal, "total":total, "totaltime":totaltime, "form":form}
+    return render_template("/orders/order_details.html", **context)
 
-    if form.validate_on_submit():
-        neworder = Orders()
-        form.populate_obj(neworder)
-        neworder.userid = current_user.id
-        db.session.add(neworder)
-        db.session.commit()
-        return redirect(url_for("order.order_home"))
-
-    context = {"user": User, "form": form}
-    return render_template("/orders/order_home.html", **context)
-
-
-# TODO: DETAILS page
-# TODO: incorperate uploading a file with putting parsed info in the system
-# TODO: link to order when clicked on cuatomer page
+@bp_order.route('/update/<id>/<orderstatus>')
+def update(id, orderstatus):
+    order_data = db.session.query(Orders).filter(Orders.id == id).first()
+    order_data.order_status = orderstatus
+    db.session.commit()
+    return redirect(url_for('order.order_details', id=id))
+    
+    
+    
+    
+# [w]]: DETAILS page
+# [x]: incorperate uploading a file with putting parsed info in the system
+# [x]]: link to order when clicked on cuatomer page

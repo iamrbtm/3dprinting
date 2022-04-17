@@ -1,0 +1,71 @@
+{% extends "orders/orders_submenu.html" %}
+{% from "_utilities.html" import disabled_field, small_field %}
+
+
+<!-- Title of the page (what goes on the tab when rendered) -->
+{% block title %}
+{% endblock %}
+
+<!-- Specific Style to this page -->
+{% block style %} 
+{% endblock %}
+
+<!-- Any Page Menu Item go here -->
+{% block extra_menu_items %}
+<!--style="line-height: 0px;" class
+="nav-link"-->
+{% endblock extra_menu_items %}
+
+<!-- Any Action items go here -->
+{% block action_items %}
+<!--style="line-height: 0px;" class
+="dropdown-item"-->
+{% endblock action_items %}
+
+<!-- Main Content -->
+{% block content %}
+<br>
+
+<section class="displayformvalues">
+    <form>
+        {{ form.csrf_token }}
+        <fieldset>
+            {{ small_field(form.date_needed) }}
+            {{ small_field(form.project_name) }}
+            {{ small_field(form.order_status) }}
+            {{ small_field(form.qty) }}
+            {{ small_field(form.setuptime) }}
+            {{ small_field(form.taredowntime) }}
+            {{ small_field(form.customerfk) }}
+            {{ small_field(form.machinefk) }}
+            {{ small_field(form.filamentfk) }}
+            {{ small_field(form.gcode) }}
+        </fieldset>
+    </form>
+</section>
+{% endblock %}
+
+<!-- Scripts needed for this page -->
+{% block scripts %}
+
+<script>
+    var formErrors = {
+        %
+        if form.errors %
+    }
+    true {
+        %
+        else %
+    }
+    false {
+        %
+        endif %
+    };
+
+    $(document).ready(function () {
+        if (formErrors) {
+            $('.modal').modal('show');
+        }
+    });
+</script>
+{% endblock %}

@@ -68,6 +68,8 @@
                         <td style="background-color: {{item.filament_rel.colorhex}}; width: 5px;"></td>
                         <td>{{item.filament_rel.name}} ({{item.filament_rel.type_rel.type}})</td>
                         <td>{{item.qty}}</td>
+                        <td>{{item.total()}}</td>
+
                     </tr>
                     {% endif %}
                     {% endfor %}

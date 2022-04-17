@@ -48,3 +48,12 @@
 {% endfor %}
 </ul>
 {% endmacro %}
+
+
+{% macro small_field(field) %}
+    {{ field(class="form-control",**kwargs)|safe }}
+    <!-- {{ field.label }} -->
+{% for error in field.errors %}
+    <li style="color:red;">{{ error }}</li>
+{% endfor %}
+{% endmacro %}
