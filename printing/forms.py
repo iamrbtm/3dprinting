@@ -209,6 +209,7 @@ class Status_Form(FlaskForm):
     status = StringField("Status Name")
     description = StringField("Description", widget=TextArea())
     color = SelectField("Color", [], choices=colors)
+    fgcolor = SelectField("Forground Color", [], choices=colors)
     whatfor = SelectField(
         "Where",
         [],

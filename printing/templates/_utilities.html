@@ -57,3 +57,15 @@
     <li style="color:red;">{{ error }}</li>
 {% endfor %}
 {% endmacro %}
+
+{% macro clear_background_select(field, fgcolor) %}
+{% if fgcolor == "#FFFFFF" %}
+{{ field(class="form-control",style="border: 1px solid #ced4da00;color: #FFFFFF;background-color: #fff0;",**kwargs)|safe }}
+{% else %}
+{{ field(class="form-control",style="border: 1px solid #ced4da00;color: #000000;background-color: #fff0;",**kwargs)|safe }}
+{% endif %}
+    <!-- {{ field.label }} -->
+{% for error in field.errors %}
+    <li style="color:red;">{{ error }}</li>
+{% endfor %}
+{% endmacro %}

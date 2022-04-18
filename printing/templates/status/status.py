@@ -47,6 +47,7 @@ def status_edit(id):
         db_stats.status = form.status.data
         db_stats.description = form.description.data
         db_stats.color = form.color.data
+        db_stats.fgcolor = form.fgcolor.data
         db_stats.whatfor = form.whatfor.data
         db_stats.userid = current_user.id
         db.session.commit()

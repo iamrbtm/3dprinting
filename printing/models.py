@@ -213,6 +213,7 @@ class Status(db.Model):
     status = db.Column(db.String(50))
     description = db.Column(db.Text)
     color = db.Column(db.String(10))
+    fgcolor = db.Column(db.String(10))
     whatfor = db.Column(db.String(50))
     userid = db.Column(db.Integer)
     update_time = db.Column(

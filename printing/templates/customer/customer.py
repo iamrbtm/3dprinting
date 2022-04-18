@@ -74,6 +74,8 @@ def customer_detail(id):
         .filter(or_(Orders.order_status == 8, Orders.order_status == 18))
         .count()
     )
+    
+    onlinestatuses = Status.query.filter(Status.whatfor == "Orders / Projects").all()
 
     context = {
         "user": User,
@@ -81,6 +83,7 @@ def customer_detail(id):
         "customer": db_cust,
         "currentorders": currentorders,
         "pastorders": pastorders,
+        "onlinestatuses":onlinestatuses
     }
     return render_template("/customer/customer_detail.html", **context)
 
@@ -91,3 +94,11 @@ def customer_delete(id):
     db.session.query(Customer).filter(Customer.id == id).delete()
     db.session.commit()
     return redirect(url_for("customer.customer_main"))
+
+
+@bp_customer.route('/update/<orderid>/<custid>/<statusid>')
+def update(orderid, custid, statusid):
+    order_data = db.session.query(Orders).filter(Orders.id == orderid).first()
+    order_data.order_status = statusid
+    db.session.commit()
+    return "Good to Go!"
