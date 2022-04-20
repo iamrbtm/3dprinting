@@ -186,6 +186,7 @@ class Orders(db.Model):
     c_markup = db.Column(db.Float)
     shipping = db.Column(db.Float)
     userid = db.Column(db.Integer)
+    active_status = db.Column(db.Boolean, default=0)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
     )
@@ -234,6 +235,15 @@ class Setup(db.Model):
     update_time = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
 
+
+class OrderLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    orderid = db.Column(db.Integer)
+    old_row_data = db.Column(db.JSON)
+    new_row_data = db.Column(db.JSON)
+    type = db.Column(db.Enum('INSERT', 'UPDATE', 'DELETE'))
+    created_by = db.Column(db.String(255))
+    timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
 
 
 # class <name>(db.Model):

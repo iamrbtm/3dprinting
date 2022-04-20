@@ -10,6 +10,7 @@ from flask import (
 from sqlalchemy.sql.expression import func
 from flask_login import login_required, current_user
 import flask_login
+from sqlalchemy import or_, and_
 from sqlalchemy.orm import session
 from printing.models import *
 from printing.templates.base.base_process import *
@@ -21,9 +22,15 @@ import datetime
 
 bp_order = Blueprint("order", __name__)
 
-
 @bp_order.route("/", methods=["GET", "POST"])
 def order_home():
+    orders = Orders.query.filter(and_(Orders.order_status !=8, Orders.order_status!=18)).all()
+    context = {"user": User, "orders":orders}
+    return render_template("/orders/order_home.html", **context)
+
+
+@bp_order.route("/add", methods=["GET", "POST"])
+def order_add():
     form = Order_Form()
 
     if form.validate_on_submit():
@@ -48,7 +55,7 @@ def order_home():
         return redirect(url_for("order.order_home"))
 
     context = {"user": User, "form": form}
-    return render_template("/orders/order_home.html", **context)
+    return render_template("/orders/order_add.html", **context)
 
 
 @bp_order.route("/details/<id>", methods=["GET", "POST"])
@@ -75,5 +82,6 @@ def update(id, orderstatus):
 # [x]: DETAILS page
 # [x]: incorperate uploading a file with putting parsed info in the system
 # [x]: link to order when clicked on cuatomer page
-# [ ]: put orders on the main menu
+# [x]]: put orders on the main menu
 # [ ]: fix to where the order details come up when clicking on the customer page.
+# [ ]: figure out why the connection keeps getting reset when adding an order... does it have naything to do with the triggers I set up?
