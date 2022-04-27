@@ -51,6 +51,7 @@ def order_add():
         neworder.c_markup = cost["markup"]
         neworder.c_labor = cost["labor"]
         neworder.c_machine = cost["machine"]
+        neworder.shipping = 0
         db.session.commit()
         return redirect(url_for("order.order_home"))
 
