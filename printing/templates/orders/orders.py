@@ -77,7 +77,10 @@ def update(id, orderstatus):
     db.session.commit()
     return redirect(url_for('order.order_details', id=id))
     
-    
+@bp_order.route('/check/<id>')
+def check(id):
+    order = Orders.query.filter(Orders.id == id).first()
+    return render_template("/emails/status_printing.html", order=order)
     
     
 # [x]: DETAILS page
@@ -85,4 +88,5 @@ def update(id, orderstatus):
 # [x]: link to order when clicked on cuatomer page
 # [x]]: put orders on the main menu
 # [ ]: fix to where the order details come up when clicking on the customer page.
-# [ ]: figure out why the connection keeps getting reset when adding an order... does it have naything to do with the triggers I set up?
+# [x]: figure out why the connection keeps getting reset when adding an order... does it have naything to do with the triggers I set up?
+# [w]: Email the customer when the order status changes
