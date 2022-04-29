@@ -5,6 +5,12 @@
 <!--class="dropdown-item"-->
 <a href="{{ url_for('filament.filament_delete', id=filament.id) }}" class="dropdown-item">Delete {{form.name.data}} Filament</a>
 {% endblock action_items %}
+
+{% block extra_menu_items %}
+<li>
+    <a class="nav-link" href="{{ url_for('filament.filament_manual_adjust_length', id=filament.id) }}">Adjust Length</a>
+</li>
+{% endblock extra_menu_items %}
 <!-- Main Content -->
 {% block content %}
 <h4 class="display-4 text-center">Filaments</h4>
@@ -27,7 +33,7 @@
             {{ render_field_sm(form.diameter) }}
         </div>
         <div class="col-md-3">
-            {{ render_field_sm(form.length_spool) }}
+            {{ render_field_sm(form.initial_length_spool) }}
         </div>
         <div class="col-md">
             {{ render_field_sm(form.vendorfk) }}

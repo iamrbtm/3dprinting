@@ -1,0 +1,10 @@
+{% extends "filament/filament_submenu.html" %}
+
+<!-- Main Content -->
+{% block content %}
+<h4 class="display-4 text-center">How much filament is remaining on the spool?</h4>
+<form method=POST action="{{url_for('filament.filament_manual_adjust_length', id=filament.id)}}">
+    Enter whole number only<input type="number" name="remaining" id="remaining">
+</form>
+   
+{% endblock %}

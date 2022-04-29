@@ -16,7 +16,6 @@
 
 <!-- Any Action items go here -->
 {% block action_items %}  <!--class="dropdown-item"-->  
-<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#new_fil_Modal">Add New Filament</a>
 {% endblock action_items %}
 
 <!-- Main Content -->
@@ -50,9 +49,10 @@
                         <th></th>
                         <th>Name</th>
                         <th>Diameter</th>
-                        <th>Length</th>
+                        <th>Spool</th>
+                        <th>Remaining Length</th>
                         <th>Cost</th>
-                        <th>Date<span class="small">Purchased</span></th>
+                        <th>Date Purchased</th>
                         <th>URL</th>
                     </tr>
                 </thead>
@@ -70,12 +70,15 @@
                         <td>{{item.name}}</td>
                         <td>{{item.diameter}}mm</td>
                         <td>
-                            {% if item.length_spool == 1 %}200g
-                            {% elif item.length_spool == 2 %}1KG
-                            {% elif item.length_spool == 3 %}2KG
+                            {% if item.initial_length_spool == 1 %}200g
+                            {% elif item.initial_length_spool == 2 %}1KG
+                            {% elif item.initial_length_spool == 3 %}2KG
                             {% else %}Other
                             {% endif %}
                         </td>
+                        <td>{% if item.aprox_remaining_length != 0 %}
+                            {{item.aprox_remaining_length}}m
+                            {% endif %}</td>
                         <td>{{"$%.2f"|format(item.priceperroll)}}</td>
                         <td>{{item.purchasedate.strftime('%b %d, %Y')}}</td>
                         <td><a href="{{item.url}}" target="_blank"
@@ -121,7 +124,7 @@
                             {{ render_field_sm(form.diameter) }}
                         </div>
                         <div class="col-md-3">
-                            {{ render_field_sm(form.length_spool) }}
+                            {{ render_field_sm(form.initial_length_spool) }}
                         </div>
                         <div class="row"></div>
                         <div class="col-md-4">

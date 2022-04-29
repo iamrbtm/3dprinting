@@ -17,9 +17,10 @@
           <a class="nav-link" href="{{ url_for('filament.filament_main') }}">Filament List</a>
         </li>
         <li>
-          {% block extra_menu_items %}
-          {% endblock extra_menu_items %}
+          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#new_fil_Modal">New Filament</a>
         </li>
+        {% block extra_menu_items %}
+        {% endblock extra_menu_items %}
       </ul>
 
 

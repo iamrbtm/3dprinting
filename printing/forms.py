@@ -55,7 +55,7 @@ class Filament_form(FlaskForm):
     diameter = SelectField(
         "Filament Diameter", [], choices=[(1.75, "1.75mm"), (3, "3mm")]
     )
-    length_spool = SelectField(
+    initial_length_spool = SelectField(
         "Length of Spool",
         [],
         coerce=int,

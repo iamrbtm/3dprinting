@@ -31,6 +31,7 @@ def order_home():
 
 @bp_order.route("/add", methods=["GET", "POST"])
 def order_add():
+    from printing.templates.filament.filament_process import update_fil_remaining
     form = Order_Form()
 
     if form.validate_on_submit():
@@ -42,10 +43,12 @@ def order_add():
             neworder.time_to_print = parsetime
             neworder.weight_in_g = parseweight
             neworder.time = time
+            neworder.filused = float(filused.replace("m\n",""))
         form.populate_obj(neworder)
         neworder.userid = current_user.id
         db.session.add(neworder)
         db.session.commit()
+        db.session.refresh(neworder)
         cost = calculate_cost(neworder, filused)
         neworder.c_materials = cost["materials"]
         neworder.c_markup = cost["markup"]
@@ -53,6 +56,7 @@ def order_add():
         neworder.c_machine = cost["machine"]
         neworder.shipping = 0
         db.session.commit()
+        update_fil_remaining(neworder.filamentfk, float(filused.replace("m\n", "")))
         return redirect(url_for("order.order_home"))
 
     context = {"user": User, "form": form}
