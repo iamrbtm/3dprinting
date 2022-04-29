@@ -3,7 +3,8 @@
 
 {% block action_items %}
 <!--class="dropdown-item"-->
-<a href="{{ url_for('filament.filament_delete', id=filament.id) }}" class="dropdown-item">Delete {{form.name.data}} Filament</a>
+<a href="{{ url_for('filament.filament_delete', id=filament.id) }}" class="dropdown-item">Delete {{form.name.data}}
+    Filament</a>
 {% endblock action_items %}
 
 {% block extra_menu_items %}
@@ -13,49 +14,82 @@
 {% endblock extra_menu_items %}
 <!-- Main Content -->
 {% block content %}
-<h4 class="display-4 text-center">Filaments</h4>
-<form method=POST enctype=multipart/form-data action="{{url_for('filament.filament_edit', id=filament.id)}}">
-    {{ form.csrf_token }}
-    <fieldset class="form-field row">
-        <div class="col-md-8">
-            {{ render_field_sm(form.name) }}
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <h4 class="display-4 text-center">Orders</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order Name</th>
+                        <th>Filament Used</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{order.date_needed}}</td>
+                        <td>{{order.project_name}}</td>
+                        <td>{{order.filused | round(2) }}m</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total Filament Used:</td>
+                        <td>{{ordersum | round(2) }}m</td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-        <div class="col-md-4">
-            {{ render_field_sm(form.picture) }}
+        <div class="col-8">
+            <h4 class="display-4 text-center">Filaments</h4>
+            <form method=POST enctype=multipart/form-data
+                action="{{url_for('filament.filament_edit', id=filament.id)}}">
+                {{ form.csrf_token }}
+                <fieldset class="form-field row">
+                    <div class="col-md-8">
+                        {{ render_field_sm(form.name) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ render_field_sm(form.picture) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.color) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.typefk) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.diameter) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.initial_length_spool) }}
+                    </div>
+                    <div class="col-md">
+                        {{ render_field_sm(form.vendorfk) }}
+                    </div>
+                    <div class="col-md">
+                        {{ render_field_sm(form.priceperroll) }}
+                    </div>
+                    <div class="col-md">
+                        {{ render_field_sm(form.purchasedate) }}
+                    </div>
+                    <div class="col-md">
+                        {{ render_field_sm(form.url) }}
+                    </div>
+                    <div class="col-md">
+                        {{ render_field_sm(form.fil_status) }}
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-md-1">
+                        {{ render_submit(form.submit) }}
+                        {{ form.referer }}
+                    </div>
+                </fieldset>
+            </form>
         </div>
-        <div class="col-md-3">
-            {{ render_field_sm(form.color) }}
-        </div>
-        <div class="col-md-3">
-            {{ render_field_sm(form.typefk) }}
-        </div>
-        <div class="col-md-3">
-            {{ render_field_sm(form.diameter) }}
-        </div>
-        <div class="col-md-3">
-            {{ render_field_sm(form.initial_length_spool) }}
-        </div>
-        <div class="col-md">
-            {{ render_field_sm(form.vendorfk) }}
-        </div>
-        <div class="col-md">
-            {{ render_field_sm(form.priceperroll) }}
-        </div>
-        <div class="col-md">
-            {{ render_field_sm(form.purchasedate) }}
-        </div>
-        <div class="col-md">
-            {{ render_field_sm(form.url) }}
-        </div>
-        <div class="col-md">
-            {{ render_field_sm(form.fil_status) }}
-        </div>
-        <div class="row"></div>
-        <div class="col-md-1">
-            {{ render_submit(form.submit) }}
-            {{ form.referer }}
-        </div>
-    </fieldset>
-</form>
-   
+    </div>
+</div>
 {% endblock %}

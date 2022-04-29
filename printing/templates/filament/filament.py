@@ -90,7 +90,9 @@ def filament_edit(id):
     form.referer.data = request.referrer
 
     types = Type.query.all()
-    context = {"user": User, "types": types, "form": form, "filament": db_fil}
+    orders = Orders.query.filter(Orders.filamentfk == id).all()
+    ordersum = db.session.query(func.sum(Orders.filused)).filter(Orders.filamentfk == id).scalar()
+    context = {"user": User, "types": types, "form": form, "filament": db_fil, "orders":orders, "ordersum":ordersum}
     return render_template("/filament/filament_edit.html", **context)
 
 
