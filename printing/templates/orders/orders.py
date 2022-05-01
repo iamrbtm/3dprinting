@@ -14,7 +14,7 @@ from sqlalchemy import or_, and_
 from sqlalchemy.orm import session
 from printing.models import *
 from printing.templates.base.base_process import *
-from printing import db, photos
+from printing import db, photos, gcodefile, uploads
 from printing.templates.orders.order_form import *
 from printing.templates.orders.process_orders import *
 from printing.utilities import *
@@ -37,10 +37,12 @@ def order_add():
     if form.validate_on_submit():
         neworder = Orders()
         if form.gcode.data:
+            ulfile = uploads.save(form.gcode.data)
             parsetime, parseweight, filused, time = get_raw_data(
-                form.filamentfk.data, form.gcode.data
+                form.filamentfk.data, ulfile
             )
             neworder.time_to_print = parsetime
+            neworder.gcodefilename = ulfile
             neworder.weight_in_g = parseweight
             neworder.time = time
             neworder.filused = float(filused.replace("m\n",""))

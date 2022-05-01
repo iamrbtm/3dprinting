@@ -157,6 +157,7 @@ class Customer(db.Model):
     phone = db.Column(db.String(20))
     email = db.Column(db.String(150), unique=True)
     markuppercent = db.Column(db.Float)
+    laborperhour = db.Column(db.Float)
     userid = db.Column(db.Integer)
     #Forign Keys
     customer_status = db.Column(db.Integer, db.ForeignKey("status.id"))

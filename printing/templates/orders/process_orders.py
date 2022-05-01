@@ -1,11 +1,10 @@
-from printing import db, uploads
+from printing import db, gcodefile
 from printing.models import *
 
 
-def get_raw_data(filament, file):
+def get_raw_data(filament, filename):
     # return filament used, time to print
-    ulfile = uploads.save(file)
-    with open ('printing/static/uploads/'+ulfile, 'r') as file:
+    with open ('printing/static/uploads/'+filename, 'r') as file:
         i = 0
         for line in file:
             if "used" in line:
@@ -13,7 +12,7 @@ def get_raw_data(filament, file):
             elif "TIME" in line:
                 time = line.replace(";TIME:", "")
             i += 1
-            if i >= 20:
+            if i >= 20: #only 20 lines of the file are read
                 break
         print(filused, time)
 
@@ -80,7 +79,7 @@ def calculate_cost(order, filused):
     
     #LABOR COSTING
     totaltime = order.setuptime + order.taredowntime
-    pricePerMin = db.session.query(Setup).first().pricePerHour / 60
+    pricePerMin = db.session.query(Customer).filter(Customer.id==order.customerfk).first().laborperhour / 60
     c_labor = pricePerMin * totaltime
     
     #MACHINE COSTING

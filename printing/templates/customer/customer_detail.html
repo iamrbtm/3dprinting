@@ -133,8 +133,14 @@
                 action="{{url_for('customer.customer_detail', id=customer.id)}}">
                 {{ form.csrf_token }}
                 <fieldset class="form-field row">
-                    <div class="col-md-9">
+                    <div class="col-md-4">
                         {{ render_field_sm(form.company) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ render_field_sm(form.markuppercent) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ render_field_sm(form.laborperhour) }}
                     </div>
                     <div class="col-md-4">
                         {{ render_field_sm(form.fname) }}

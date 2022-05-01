@@ -13,7 +13,7 @@ load_dotenv()
 db = SQLAlchemy()
 photos = UploadSet("photos", IMAGES)
 uploads = UploadSet("uploads", ALL)
-gcode = UploadSet("gcode", ALL)
+gcodefile = UploadSet("gcodefile", ALL)
 mail = Mail()
 
 
@@ -24,7 +24,7 @@ def create_app():
     # if os.environ.get("UPLOADS_USE") == "True":
     app.config["UPLOADED_PHOTOS_DEST"] = "printing/static/images"
     app.config["UPLOADED_UPLOADS_DEST"] = "printing/static/uploads"
-    app.config["UPLOADED_GCODE_DEST"] = "printing/static/gcode"
+    app.config["UPLOADED_GCODEFILE_DEST"] = "printing/static/gcodefile"
     configure_uploads(app, photos)
     configure_uploads(app, uploads)
 
@@ -75,7 +75,6 @@ def create_app():
     app.register_blueprint(bp_customer, url_prefix="/customer")
     app.register_blueprint(bp_order, url_prefix="/order")
     app.register_blueprint(bp_status, url_prefix="/status")
-
 
     from printing.models import User
 

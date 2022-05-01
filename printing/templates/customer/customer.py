@@ -59,6 +59,8 @@ def customer_detail(id):
         db_cust.email = form.email.data
         db_cust.userid = current_user.id
         db_cust.customer_status = form.customer_status.data
+        db_cust.markuppercent = float(form.markuppercent.data)
+        db_cust.laborperhour = form.laborperhour.data
         db.session.commit()
         return redirect(url_for("customer.customer_main"))
 

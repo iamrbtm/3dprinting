@@ -194,6 +194,8 @@ class customer_form(FlaskForm):
     fname = StringField("First Name", [InputRequired()])
     lname = StringField("Last Name", [InputRequired()])
     company = StringField("Company")
+    markuppercent = FloatField("Markup Percentage", [NumberRange(min=0, max=100)])
+    laborperhour = FloatField("Labor Per Hour", [NumberRange(min=0, max=50)])
     address = StringField("Address", [])
     address2 = StringField("Address2", [])
     city = StringField("City", [])
