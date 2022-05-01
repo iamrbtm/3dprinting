@@ -13,6 +13,7 @@ load_dotenv()
 db = SQLAlchemy()
 photos = UploadSet("photos", IMAGES)
 uploads = UploadSet("uploads", ALL)
+gcode = UploadSet("gcode", ALL)
 mail = Mail()
 
 
@@ -23,6 +24,7 @@ def create_app():
     # if os.environ.get("UPLOADS_USE") == "True":
     app.config["UPLOADED_PHOTOS_DEST"] = "printing/static/images"
     app.config["UPLOADED_UPLOADS_DEST"] = "printing/static/uploads"
+    app.config["UPLOADED_GCODE_DEST"] = "printing/static/gcode"
     configure_uploads(app, photos)
     configure_uploads(app, uploads)
 
@@ -35,7 +37,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config[
         "SQLALCHEMY_DATABASE_URI"
-    ] = f"mysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}"
+    ] = f"mysql+pymysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}"
     db.init_app(app)
 
     # Migration for Database

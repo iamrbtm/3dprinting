@@ -10,5 +10,6 @@ requests
 validators
 flask_debugtoolbar
 python-dotenv
+PyMySQL
 WTForms-SQLAlchemy
 email_validator

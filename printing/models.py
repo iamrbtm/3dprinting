@@ -189,6 +189,7 @@ class Orders(db.Model):
     c_markup = db.Column(db.Float)
     shipping = db.Column(db.Float)
     userid = db.Column(db.Integer)
+    gcodefilename = db.Column(db.String(100))
     active_status = db.Column(db.Boolean, default=0)
     update_time = db.Column(
         db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now
