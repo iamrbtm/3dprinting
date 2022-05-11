@@ -182,6 +182,7 @@ class Orders(db.Model):
     time_to_print = db.Column(db.String(50))
     setuptime = db.Column(db.Integer)
     taredowntime = db.Column(db.Integer)
+    postprocessingtime = db.Column(db.Integer)
     time = db.Column(db.Integer)
     filused = db.Column(db.Float)
     c_labor = db.Column(db.Float)

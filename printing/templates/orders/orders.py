@@ -22,43 +22,24 @@ import datetime
 
 bp_order = Blueprint("order", __name__)
 
+
 @bp_order.route("/", methods=["GET", "POST"])
 def order_home():
-    orders = Orders.query.filter(and_(Orders.order_status !=8, Orders.order_status!=18)).all()
-    context = {"user": User, "orders":orders}
+    orders = Orders.query.filter(
+        and_(Orders.order_status != 8, Orders.order_status != 18)
+    ).all()
+    context = {"user": User, "orders": orders}
     return render_template("/orders/order_home.html", **context)
 
 
 @bp_order.route("/add", methods=["GET", "POST"])
 def order_add():
-    from printing.templates.filament.filament_process import update_fil_remaining
     form = Order_Form()
 
     if form.validate_on_submit():
-        neworder = Orders()
-        if form.gcode.data:
-            ulfile = uploads.save(form.gcode.data)
-            parsetime, parseweight, filused, time = get_raw_data(
-                form.filamentfk.data, ulfile
-            )
-            neworder.time_to_print = parsetime
-            neworder.gcodefilename = ulfile
-            neworder.weight_in_g = parseweight
-            neworder.time = time
-            neworder.filused = float(filused.replace("m\n",""))
-        form.populate_obj(neworder)
-        neworder.userid = current_user.id
-        db.session.add(neworder)
-        db.session.commit()
-        db.session.refresh(neworder)
-        cost = calculate_cost(neworder, filused)
-        neworder.c_materials = cost["materials"]
-        neworder.c_markup = cost["markup"]
-        neworder.c_labor = cost["labor"]
-        neworder.c_machine = cost["machine"]
-        neworder.shipping = 0
-        db.session.commit()
-        update_fil_remaining(neworder.filamentfk, float(filused.replace("m\n", "")))
+        ulfile = uploads.save(form.gcode.data)
+        order = Ordering(form.filamentfk.data, form.setuptime.data, form.taredowntime.data, form.postprocessingtime.data, form.customerfk.data, form.machinefk.data, form.order_status.data, form.date_needed.data, form.project_name.data, form.qty.data, ulfile)
+        order.add_to_db()
         return redirect(url_for("order.order_home"))
 
     context = {"user": User, "form": form}
@@ -67,28 +48,51 @@ def order_add():
 
 @bp_order.route("/details/<id>", methods=["GET", "POST"])
 def order_details(id):
-    order_data = db.session.query(Orders).filter(Orders.id == id).first()
-    form = Order_Form(obj=order_data)
-    subtotal = order_data.c_materials + order_data.c_machine + order_data.c_labor + order_data.c_markup
-    total = order_data.shipping + subtotal
-    totaltime = calc_total_time((order_data.setuptime + order_data.taredowntime), order_data.time)
-
-    context = {"user": User, "order": order_data, "subtotal": subtotal, "total":total, "totaltime":totaltime, "form":form}
+    data = Orders.query.get_or_404(id)
+    form = Order_Form(obj=data)
+    order = Ordering(data.filamentfk,data.setuptime,
+                     data.taredowntime, data.postprocessingtime,
+                     data.customerfk, data.machinefk, data.order_status,
+                     data.date_needed, data.project_name, data.qty, 
+                     data.gcodefilename)
+    order.send_to_db()
+    context = {
+        "user": User,
+        "order": data,
+        "subtotal": order.subtotal,
+        "total": order.total,
+        "totaltime": order.calculate_print_time(),
+        "form": form,
+    }
     return render_template("/orders/order_details.html", **context)
 
-@bp_order.route('/update/<id>/<orderstatus>')
+
+@bp_order.route("/update/<id>/<orderstatus>")
 def update(id, orderstatus):
-    order_data = db.session.query(Orders).filter(Orders.id == id).first()
-    order_data.order_status = orderstatus
+    data = db.session.query(Orders).filter(Orders.id == id).first()
+    data.order_status = orderstatus
     db.session.commit()
-    return redirect(url_for('order.order_details', id=id))
-    
-@bp_order.route('/check/<id>')
+    return redirect(url_for("order.order_details", id=id))
+
+
+@bp_order.route("/check/<id>")
 def check(id):
     order = Orders.query.filter(Orders.id == id).first()
     return render_template("/emails/status_printing.html", order=order)
-    
-    
+
+
+@bp_order.route("/idk/<filid>/<fillength>/<s>/<t>/<p>/<cust>")
+def idk(filid, fillength, cust, s=5, t=5, p=0):
+    from printing.templates.orders.process_orders_class import Ordering
+
+    order = Ordering(filid, fillength, s, t, p, cust)
+    smt = f"<h1>Materials: {str(order.c_materials)}<br/>"
+    smt = smt + f"Markup: {str(order.cost_markup())}<br/>"
+    smt = smt + f"Labor: {str(order.cost_labor())}<br/>"
+    smt = smt + f"</h1>"
+    return smt
+
+
 # [x]: DETAILS page
 # [x]: incorperate uploading a file with putting parsed info in the system
 # [x]: link to order when clicked on cuatomer page
