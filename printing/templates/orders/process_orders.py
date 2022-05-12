@@ -2,7 +2,8 @@ from printing import db
 from printing.models import *
 from printing.templates.orders.gcode import *
 from flask_login import current_user
-
+import requests
+import json
 
 class Ordering:
     def __init__(
@@ -89,7 +90,65 @@ class Ordering:
     def calculate_shipping(self):
         cust = Customer.query.get_or_404(self.customerfk)
 
-        return 0
+        url = "https://api.goshippo.com/shipments/"
+        token = apitoken.query.filter(apitoken.name == "shippo").first().token
+        
+        payload = json.dumps({
+        "address_from": {
+            "name": "Jeremy Guill",
+            "street1": "2408 SW Oakwood Dr",
+            "street2": "",
+            "city": "Dallas",
+            "state": "OR",
+            "zip": "97338",
+            "country": "US",
+            "phone": "5039904832",
+            "email": "rbtm2006@me.com",
+            "is_residential": True
+        },
+        "address_to": {
+            "name": str(cust.fullname()),
+            "street1": str(cust.address),
+            "street2": "",
+            "city": str(cust.city),
+            "state": str(cust.state),
+            "zip": str(cust.zipcode),
+            "country": "US",
+            "phone": str(cust.phone),
+            "email": str(cust.email),
+            "is_residential": True
+        },
+        "parcels": [
+            {
+            "weight": str(self.weight_in_g.replace("g", "")),
+            "length": "4",
+            "width": "4",
+            "height": "4",
+            "distance_unit": "in",
+            "mass_unit": "g"
+            }
+        ],
+        "extra": {},
+        "async": False
+        })
+        headers = {
+        'Authorization': f'ShippoToken {token}',
+        'Content-Type': 'application/json',
+        'Shippo-API-Version': '2017-08-01'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
+        fulljson = json.loads(response.text)
+
+        try:
+            if fulljson['status'] == "SUCCESS":
+                for rate in fulljson['rates']:
+                    for att in rate['attributes']:
+                        if att == "CHEAPEST":
+                            return float(rate['amount'])
+        except: 
+            return 0
 
     def update_status(self):
         pass

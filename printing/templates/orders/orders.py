@@ -55,6 +55,7 @@ def order_details(id):
                      data.customerfk, data.machinefk, data.order_status,
                      data.date_needed, data.project_name, data.qty, 
                      data.gcodefilename)
+    order.calculate_shipping()
     order.send_to_db()
     context = {
         "user": User,
